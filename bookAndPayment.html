@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curatorial Reservation &amp; Custody Protocol — Your Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf1f5;--bg2:#fbe8f0;--card:#fff;--ink:#2b1d24;--mut:#8a7480;--acc:#d4789c;--accd:#c0628a;--deep:#8a2d55;--line:#f1d3e0;
+--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+a{color:inherit;text-decoration:none}
+.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+.btn{display:inline-block;background:var(--acc);color:#fff;border:0;border-radius:6px;padding:8px 14px;font:500 12px var(--sans);cursor:pointer;transition:background .2s;text-align:center}
+.btn:hover{background:var(--accd)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;background:rgba(253,241,245,.92);backdrop-filter:blur(8px);position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);gap:16px}
+.logo{font-family:var(--serif);font-style:italic;font-size:18px}
+nav ul{display:flex;gap:22px;list-style:none;font-size:12px;color:var(--mut)}
+nav li.cur{color:var(--deep);border-bottom:2px solid var(--deep)}
+@media(max-width:900px){nav ul{display:none}}
+main{max-width:1100px;margin:0 auto;padding:40px 6vw 72px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(26px,4vw,34px);line-height:1.15;margin-top:6px}
+.sec{font-size:11px;color:var(--deep);display:flex;align-items:center;gap:6px}
+/* stepper */
+.stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0 28px}
+@media(max-width:760px){.stepper{grid-template-columns:1fr 1fr}}
+.st{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:8px;padding:12px;opacity:.7}
+.st .n{width:26px;height:26px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--mut);flex:none}
+.st small{display:block;font-size:9px;letter-spacing:.14em;color:var(--mut)}
+.st b{font-size:12px;font-weight:500}
+.st.done .n{background:var(--line);color:var(--accd)}
+.st.cur{opacity:1;background:var(--bg2);border-color:var(--acc)}
+.st.cur .n{background:var(--deep);color:#fff}
+.vb{font-size:8px;background:var(--line);color:var(--deep);padding:1px 6px;border-radius:4px;margin-left:4px;letter-spacing:.08em}
+.layout{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+.col{display:flex;flex-direction:column;gap:24px}
+.panel{background:var(--card);border-radius:14px;padding:22px;box-shadow:0 8px 28px rgba(192,98,138,.1);border:1px solid var(--line)}
+.panel h2{font-family:var(--serif);font-weight:400;font-size:19px;display:flex;align-items:center;gap:8px}
+.panel .lead{font-size:12px;color:var(--mut);margin:6px 0 14px}
+.hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.pill{font-size:10px;color:var(--deep);border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:4px 12px;white-space:nowrap}
+.tagb{font-size:10px;color:var(--deep);background:var(--bg2);border-radius:4px;padding:3px 9px;letter-spacing:.04em}
+.idrow{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;flex-wrap:wrap}
+.idic{width:38px;height:38px;border-radius:8px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px}
+.idrow .t{flex:1;min-width:180px;font-size:12px}.idrow .t b{display:block;font-weight:600}.idrow .t span{color:var(--mut)}
+.exp{font-size:10px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:2px 8px}
+.lnk{font-size:11px;color:var(--deep);font-weight:600;cursor:pointer;background:none;border:0}
+.drop{margin-top:14px;border:1.5px dashed var(--acc);border-radius:8px;background:var(--bg);text-align:center;padding:20px;cursor:pointer;font-size:11px;color:var(--mut)}
+.drop b{display:block;font-size:12px;color:var(--ink);font-weight:600;margin:4px 0}
+.drop.has{border-style:solid;background:#fff}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.opts{grid-template-columns:1fr}}
+.opt{border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;background:#fff;display:flex;flex-direction:column;gap:6px;position:relative;transition:all .2s;text-align:left;font:inherit;color:inherit}
+.opt.on{border:2px solid var(--deep);background:var(--bg);padding:13px}
+.opt .k{font-size:10px;letter-spacing:.1em;color:var(--mut);display:flex;gap:6px}
+.opt.on .k{color:var(--deep)}
+.opt b{font-size:12px}
+.opt p{font-size:11px;color:#5d4a54}
+.opt .f{margin-top:auto;display:flex;justify-content:space-between;font-size:10px;font-weight:600;border-top:1px solid var(--line);padding-top:8px;color:var(--ink)}
+.opt .f span:last-child{color:var(--deep)}
+.radio{position:absolute;top:12px;right:12px;width:14px;height:14px;border-radius:50%;border:1px solid var(--mut);background:#fff}
+.opt.on .radio{border:4px solid var(--deep)}
+.addr{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-top:14px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:11px;color:#5d4a54}
+.addr b{color:var(--ink);font-weight:600}
+.agree{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:12px}
+.agree label{display:flex;gap:10px;font-size:11px;color:#5d4a54;cursor:pointer}
+.agree label b{color:var(--ink)}
+.agree input{accent-color:var(--deep);width:15px;height:15px;flex:none;margin-top:2px}
+.foot{display:flex;justify-content:space-between;font-size:10px;color:var(--mut);margin-top:12px;gap:8px;flex-wrap:wrap}
+.foot a{text-decoration:underline;color:var(--ink)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.tab{border:1px solid var(--line);border-radius:6px;background:#fff;padding:11px 6px;font:500 12px var(--sans);color:var(--ink);cursor:pointer}
+.tab.on{background:var(--bg);border:1.5px solid var(--deep);color:var(--deep)}
+.fld{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.fld label{font-size:9px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase}
+.fld input{border:1px solid var(--line);border-radius:6px;padding:11px 12px;font:13px var(--sans);color:var(--ink);background:#fff;width:100%}
+.fld input:focus{outline:2px solid var(--acc);outline-offset:1px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.alt{font-size:12px;color:#5d4a54;background:var(--bg);border-radius:8px;padding:14px;border:1px solid var(--line)}
+/* summary */
+.sum{position:sticky;top:80px}
+.sum .it{display:flex;gap:12px;margin:14px 0}
+.thumb{width:68px;height:68px;border-radius:8px;background:linear-gradient(160deg,#e8e6e4,#9c9a98 55%,#262626);flex:none;display:flex;align-items:center;justify-content:center;font-size:24px}
+.it h3{font-family:var(--serif);font-weight:500;font-size:16px;display:flex;justify-content:space-between;gap:8px}
+.it h3 span{font-family:var(--sans);font-size:13px;font-weight:500}
+.it small{display:block;font-size:10px;color:var(--mut)}
+.mini{display:inline-block;font-size:9px;border:1px solid var(--line);background:var(--bg);border-radius:4px;padding:2px 7px;margin:4px 4px 0 0;color:#5d4a54}
+.rows{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;display:flex;flex-direction:column;gap:9px;font-size:12px}
+.rows .r{display:flex;justify-content:space-between;gap:8px}
+.rows .r span:first-child{color:#5d4a54}
+.inc{color:var(--deep)}
+.tot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);margin-top:14px;padding-top:14px;font-weight:600}
+.tot b{font-family:var(--serif);font-weight:500;font-size:20px;color:var(--deep)}
+.hold{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px;font-size:10px;color:#5d4a54;margin:16px 0}
+.hold b{display:block;color:var(--ink);margin-bottom:2px}
+.big{width:100%;padding:13px;font-size:13px;margin-bottom:10px}
+.big:disabled{opacity:.5;cursor:not-allowed}
+.fine{font-size:10px;color:var(--mut);text-align:center}
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center;border-top:1px solid var(--line);margin-top:16px;padding-top:14px;font-size:10px}
+.trust b{display:block;font-weight:600}.trust span{color:var(--mut);font-size:9px}
+footer{padding:36px 6vw;border-top:1px solid var(--line);background:var(--bg2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:11px;color:var(--mut)}
+footer .logo{color:var(--ink);display:block;margin-bottom:6px}
+footer ul{display:flex;gap:18px;list-style:none;flex-wrap:wrap;max-width:560px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:99px;font-size:12px;opacity:0;pointer-events:none;transition:all .3s;z-index:50}
+#toast.on{opacity:1;transform:translateX(-50%)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+nav ul a{color:inherit;padding-bottom:4px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+nav ul a:hover{color:#c0628a}
+nav ul a.cur{color:#8e3a5d;border-bottom-color:currentColor}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+<nav>
+ <a class="logo" href="landingPage.html">Your Archive</a>
+ <ul><li><a href="cameraRent.html">Explore Cameras</a></li><li><a href="photoArchive.html">Photography Archive</a></li><li><a href="landingPage.html#how">How It Works</a></li><li><a href="cameraDetails.html#book">Pricing &amp; Accessories</a></li><li><a href="bookAndPayment.html" class="cur">My Bookings</a></li><li><a href="landingPage.html#admin">Admin Portal</a></li></ul>
+ <a class="btn" href="cameraRent.html">Archive Account / Book Now</a>
+</nav>
+
+<main>
+ <div class="top">
+  <div><span class="eyebrow">Archival Custody Procedure</span><h1>Curatorial Reservation &amp; Custody Protocol</h1></div>
+  <span class="sec">🔒 End-to-End Vault Escrow Encrypted</span>
+ </div>
+
+ <div class="stepper">
+  <div class="st done"><span class="n">✓</span><div><small>STEP 01</small><b>Equipment &amp; Dates</b></div></div>
+  <div class="st cur"><span class="n">2</span><div><small>STEP 02 <span class="vb">VERIFIED</span></small><b>ID Verification</b></div></div>
+  <div class="st"><span class="n">3</span><div><small>STEP 03</small><b>Dispatch &amp; Insurance</b></div></div>
+  <div class="st"><span class="n">4</span><div><small>STEP 04</small><b>Secure Payment</b></div></div>
+ </div>
+
+ <div class="layout">
+  <div class="col">
+   <section class="panel">
+    <div class="hd"><h2>🛡 Archival Provenance &amp; ID Custody</h2><span class="pill">● Status: Verified (Pass ID #98214)</span></div>
+    <p class="lead">Due to the museum-grade calibration of our optical assets, verified credentials are compulsory.</p>
+    <div class="idrow"><span class="idic">🪪</span><div class="t"><b>Elena Vance (Studio Director)</b><span>Verified via Global Passport Vault &amp; Biometric Ledger</span></div><span class="exp">Exp: 2028-11</span><button class="lnk" onclick="toast('Opening ID update…')">Update →</button></div>
+    <div class="drop" id="drop" tabindex="0" role="button"><div style="font-size:20px">⛶</div><b id="dropT">Add Supplemental Commercial Production Credentials</b><span id="dropS">Submit Production Carnet, International ATA Carnet, or Press Authorization (PDF / High-res scan up to 25MB)</span><input type="file" id="file" accept=".pdf,image/*" hidden></div>
+   </section>
+
+   <section class="panel">
+    <h2>Dispatch &amp; Handover Method</h2>
+    <p class="lead">Select custodial chain for transport from the temperature-controlled optical facility.</p>
+    <div class="opts">
+     <button class="opt on" data-d="35" aria-pressed="true"><span class="radio"></span>
+      <span class="k">🚚 WHITE-GLOVE COURIER</span><b>Direct to Studio / Location</b>
+      <p>Secured transit vehicle with active anti-vibration casing and biometric custody signing.</p>
+      <span class="f"><span>Metro Transit: 2 Hours</span><span>$35.00</span></span></button>
+     <button class="opt" data-d="0" aria-pressed="false"><span class="radio"></span>
+      <span class="k">🏛 VAULT ATELIER PICKUP</span><b>Atelier Archive Flagship</b>
+      <p>Collect directly at 740 Broadway Vault Suites. Includes 30-minute optical bench calibration check.</p>
+      <span class="f"><span>Available 08:30 AM</span><span>Complimentary</span></span></button>
+    </div>
+    <div class="addr" id="addr"><div>📍 <b>Dispatched Destination: Studio 4B</b><br>540 W 26th Street, Chelsea Arts Building, New York, NY 10001</div><button class="lnk" onclick="editAddr()">Edit Address</button></div>
+   </section>
+
+   <section class="panel">
+    <h2>✎ Archival Equipment Agreement &amp; Bond</h2>
+    <p class="lead">Medium format sensors and cinema elements require specialized handling under clean-room protocol standards.</p>
+    <div class="agree">
+     <label><input type="checkbox" class="chk" checked><span><b>Tier-1 Curatorial Insurance Declaration:</b> I acknowledge and accept the comprehensive equipment protection coverage ($75 included). Zero deductible applies for certified transit accidents and mechanical shutter degradation.</span></label>
+     <label><input type="checkbox" class="chk" checked><span><b>Security Deposit Pre-Authorization ($500.00 Hold):</b> A temporary hold will be placed upon checkout and automatically released within 24 hours of optical lens element and sensor return inspection.</span></label>
+    </div>
+    <div class="foot"><a href="#">Read Complete Archival Custody Charter</a><span>✓ Underwritten by Lloyd’s Fine Spec</span></div>
+   </section>
+
+   <section class="panel">
+    <div class="hd"><div><h2>Payment Method</h2><p class="lead" style="margin-bottom:0">All transactions are settled via Stripe Vault Protected protocol.</p></div><span class="tagb">256-bit AES</span></div>
+    <div class="tabs" style="margin-top:16px" role="tablist">
+     <button class="tab on" data-p="card">▭ Credit Card</button><button class="tab" data-p="apple">▯ Apple Pay</button><button class="tab" data-p="wire">🏛 Wire / Net 15</button>
+    </div>
+    <div id="p-card">
+     <div class="fld"><label for="cn">Cardholder Full Name</label><input id="cn" value="Elena Vance" autocomplete="cc-name"></div>
+     <div class="fld"><label for="cc">Card Number</label><input id="cc" value="•••• •••• •••• 4092" inputmode="numeric" autocomplete="cc-number"></div>
+     <div class="two"><div class="fld"><label for="ce">Expiry Date</label><input id="ce" value="09/27" autocomplete="cc-exp"></div><div class="fld"><label for="cv">Security Code (CVC)</label><input id="cv" value="882" inputmode="numeric" autocomplete="cc-csc"></div></div>
+    </div>
+    <div id="p-apple" class="alt" hidden>You’ll be prompted to authorize with Face ID / Touch ID on your Apple device after confirming.</div>
+    <div id="p-wire" class="alt" hidden>Net 15 terms: wire instructions and invoice will be emailed to the studio account after confirmation. Equipment is released upon cleared funds and security hold.</div>
+   </section>
+  </div>
+
+  <aside class="panel sum">
+   <div class="hd"><div><span class="eyebrow" style="color:var(--deep)">Rental Dossier</span><h2 style="font-size:21px;margin-top:2px">Booking Summary</h2></div><span class="tagb">3-Day Vault Window</span></div>
+   <div class="it"><div class="thumb">📷</div><div style="flex:1"><h3>Hasselblad X2D 100C <span>$555.00</span></h3><small>100MP BSI CMOS Medium Format</small><small>📅 Oct 14, 2024 — Oct 17, 2024 (3 Days @ $185/d)</small><span class="mini">Condition: Archival Pristine</span><span class="mini">Calibrated: Oct 02</span></div></div>
+   <div class="rows">
+    <span class="eyebrow">Selected Optical Accompaniments</span>
+    <div class="r"><span>○ XCD 38mm f/2.5 V Lens</span><span>$195.00</span></div>
+    <div class="r"><span>▣ Protective Pelican Air Hardcase</span><span class="inc">Included</span></div>
+    <div class="r"><span>⛉ Comprehensive Protection (Tier-1)</span><span>$75.00</span></div>
+   </div>
+   <div class="rows">
+    <div class="r"><span>Subtotal Equipment &amp; Glass</span><span>$825.00</span></div>
+    <div class="r"><span>Vault Courier Dispatch (Climate Van)</span><span id="sd">$35.00</span></div>
+    <div class="r"><span>NYS Curatorial Equipment Surtax (8.34%)</span><span>$68.80</span></div>
+   </div>
+   <div class="tot"><span>Total Reservation Amount</span><b id="tot">$928.80</b></div>
+   <div class="hold"><b>ⓘ Refundable Security Hold: $500.00</b>Pre-authorized hold only. Will not be settled from card unless structural defect is logged upon post-production return.</div>
+   <button class="btn big" id="go">🔒 Confirm &amp; Authorize Reservation (<span id="tot2">$928.80</span>)</button>
+   <p class="fine">By confirming, you execute the Archival Custody Contract &amp; Pre-authorization Hold.</p>
+   <div class="trust"><div>🔒<b>256-bit SSL</b><span>Stripe Vault Escrow</span></div><div>✓<b>Archival Certified</b><span>Laser Bench Tested</span></div><div>☎<b>24/7 Concierge</b><span>Production Assist</span></div></div>
+  </aside>
+ </div>
+</main>
+
+<footer>
+ <div><span class="logo">Your Archive</span>© 2024 Your Archive. Museum-Grade Optical Equipment &amp; Curatorial Rental Vault. All Rights Reserved.</div>
+ <ul><li>Archival Standards</li><li>Insurance &amp; Provenance</li><li>Terms of Dispatch</li><li>Discretion Protocol</li><li>Contact Curators</li><li>Journal</li></ul>
+</footer>
+<div id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const money=n=>'$'+n.toFixed(2);
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2400)}
+let ship=35;
+function totals(){const t=825+ship+68.8;$('#tot').textContent=$('#tot2').textContent=money(t);$('#sd').textContent=ship?money(ship):'Complimentary';
+ $('.rows .r span#sd').parentElement.firstElementChild.textContent=ship?'Vault Courier Dispatch (Climate Van)':'Vault Atelier Pickup'}
+$$('.opt').forEach(o=>o.onclick=()=>{$$('.opt').forEach(x=>{x.classList.remove('on');x.setAttribute('aria-pressed','false')});o.classList.add('on');o.setAttribute('aria-pressed','true');ship=+o.dataset.d;
+ $('#addr').innerHTML=ship?'<div>📍 <b>Dispatched Destination: Studio 4B</b><br>540 W 26th Street, Chelsea Arts Building, New York, NY 10001</div><button class="lnk" onclick="editAddr()">Edit Address</button>':'<div>📍 <b>Pickup: Atelier Archive Flagship</b><br>740 Broadway Vault Suites, New York, NY · Available 08:30 AM</div>';totals()});
+function editAddr(){const a=prompt('Enter new dispatch address:','540 W 26th Street, Chelsea Arts Building, New York, NY 10001');if(a){$('#addr div').innerHTML='📍 <b>Dispatched Destination: Studio 4B</b><br>'+a.replace(/[<>&]/g,'');toast('Address updated')}}
+$$('.tab').forEach(t=>t.onclick=()=>{$$('.tab').forEach(x=>x.classList.toggle('on',x===t));['card','apple','wire'].forEach(k=>$('#p-'+k).hidden=k!==t.dataset.p)});
+const drop=$('#drop'),file=$('#file');
+drop.onclick=()=>file.click();drop.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();file.click()}};
+file.onchange=()=>{const f=file.files[0];if(!f)return;if(f.size>25*1048576){toast('File exceeds 25MB');file.value='';return}
+ drop.classList.add('has');$('#dropT').textContent='✓ '+f.name;$('#dropS').textContent=(f.size/1048576).toFixed(2)+' MB attached — click to replace'};
+const chks=$$('.chk'),go=$('#go');
+chks.forEach(c=>c.onchange=()=>go.disabled=!chks.every(x=>x.checked));
+go.onclick=()=>toast('Reservation authorized — confirmation sent to studio account');
+totals();
+</script>
+</body>
+</html>

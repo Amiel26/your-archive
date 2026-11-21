@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hasselblad X2D 100C — Your Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf1f5;--bg2:#fbe8f0;--card:#fff;--ink:#2b1d24;--mut:#8a7480;--acc:#d4789c;--accd:#b0507a;--line:#f1d3e0;
+--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+a{color:inherit;text-decoration:none}button{font-family:inherit}
+.eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+h2{font-family:var(--serif);font-weight:400;font-size:24px}
+.btn{display:inline-block;background:var(--acc);color:#fff;border:0;border-radius:6px;padding:9px 14px;font:500 12px var(--sans);cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--accd)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;background:rgba(253,241,245,.92);backdrop-filter:blur(8px);position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);gap:16px}
+.logo{font-family:var(--serif);font-style:italic;font-size:18px}
+nav ul{display:flex;gap:22px;list-style:none;font-size:12px;color:var(--mut)}
+@media(max-width:900px){nav ul{display:none}}
+.crumbs{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:10px 6vw;font-size:11px;color:var(--mut);background:var(--bg2);border-bottom:1px solid var(--line)}
+.crumbs b{color:var(--ink);font-weight:500}
+.crumbs .st{font-size:10px;letter-spacing:.08em}
+.crumbs .st::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--acc);margin-right:6px;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(320px,1fr);gap:28px;padding:28px 6vw 60px;max-width:1280px;margin:0 auto}
+@media(max-width:960px){.layout{grid-template-columns:1fr}}
+.panel{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px}
+.badge{display:inline-block;font-size:9px;letter-spacing:.2em;color:var(--accd);background:#fff;border:1px solid var(--line);border-radius:4px;padding:3px 8px;margin-right:8px}
+.loc{font-size:11px;color:var(--mut)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(28px,4vw,38px);margin:10px 0 8px}
+.lede{color:#5d4a54;max-width:600px;margin-bottom:22px}
+/* gallery */
+.main{background:#fff;border-radius:10px;padding:14px;position:relative}
+.view{height:340px;border-radius:8px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:background .5s}
+.view svg{width:46%;max-width:240px;filter:drop-shadow(0 18px 18px rgba(0,0,0,.25));transition:transform .6s}
+.view:hover svg{transform:scale(1.05) rotate(-1.5deg)}
+.zoom{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:#fff;border:0;cursor:pointer;color:var(--acc);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.ser{margin-top:10px;font-size:10px;letter-spacing:.06em;color:var(--mut);display:inline-block;border:1px solid var(--line);border-radius:4px;padding:4px 10px}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.thumbs button{height:64px;border-radius:6px;border:2px solid transparent;cursor:pointer;opacity:.75;transition:all .25s}
+.thumbs button.on{border-color:var(--accd);opacity:1}
+.p1{background:linear-gradient(160deg,#e9c4c0,#b98274 60%,#7a5149)}
+.p2{background:linear-gradient(160deg,#d8d0cc,#a39a96 60%,#58504c)}
+.p3{background:linear-gradient(160deg,#cfd3d6,#8b9298 60%,#3b4046)}
+.p4{background:linear-gradient(160deg,#f2c9a0,#c97e5b 60%,#5c3a35)}
+/* video */
+.video{margin-top:22px}
+.vhead{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;color:var(--accd);margin-bottom:10px}
+.vhead span:last-child{color:var(--mut)}
+.vid{height:300px;border-radius:10px;position:relative;background:linear-gradient(135deg,#7a5149,#b98274 45%,#3b2a2f);overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
+.vid::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(30,15,22,.75))}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:var(--acc);border:0;color:#fff;font-size:20px;cursor:pointer;z-index:2;box-shadow:0 0 0 0 rgba(212,120,156,.6);animation:ring 2.4s infinite}
+@keyframes ring{70%{box-shadow:0 0 0 18px rgba(212,120,156,0)}}
+.vid h3,.vid p{position:relative;z-index:1}
+.vid h3{font-family:var(--serif);font-weight:400;font-size:20px}
+.vid p{font-size:11px;opacity:.85}
+.res{position:absolute;right:14px;bottom:14px;z-index:1;background:rgba(43,29,36,.7);font-size:10px;padding:3px 8px;border-radius:4px}
+/* proofs */
+.proofs{margin-top:28px}
+.phead{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px}
+.phead button{width:28px;height:28px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;margin-left:6px}
+.track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth}
+.track::-webkit-scrollbar{display:none}
+.proof{flex:0 0 min(300px,78%);scroll-snap-align:start;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.proof .ph{height:340px;border-radius:6px;margin:8px 0 10px;transition:transform .5s}
+.proof:hover .ph{transform:scale(1.02)}
+.proof .top{text-align:center;font-family:var(--serif);color:var(--mut);font-size:13px}
+.proof b{display:block;font-size:12px}
+.proof small{font-family:var(--mono);font-size:10px;color:var(--mut)}
+/* specs */
+.specs{margin-top:34px}
+.specs>p{font-size:12px;color:var(--mut);margin:4px 0 14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:1fr 1.3fr;gap:16px;padding:14px 16px;background:var(--bg2);border-bottom:1px solid var(--line);align-items:center}
+.row:first-of-type{border-radius:12px 12px 0 0}.row:last-child{border-radius:0 0 12px 12px;border:0}
+.row b{display:block;font-weight:500;font-size:13px}
+.row small{color:var(--mut);font-size:11px}
+.row span{font-family:var(--mono);font-size:11px;text-align:right}
+@media(max-width:560px){.row{grid-template-columns:1fr}.row span{text-align:left}}
+/* kit */
+.kit{margin-top:28px}
+.kit h3{font-family:var(--serif);font-weight:400;font-size:17px;margin-bottom:2px}
+.kit>p{font-size:11px;color:var(--mut);margin-bottom:14px}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kg div{background:#fff;border-radius:8px;padding:10px;font-size:11px}
+.kg b{display:block;font-size:12px;font-weight:500}
+.kg span{color:var(--mut)}
+/* booking */
+aside{position:sticky;top:70px;align-self:start;display:flex;flex-direction:column;gap:14px}
+@media(max-width:960px){aside{position:static}}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 14px}
+.tier{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .2s}
+.tier.on{border:1.5px solid var(--accd);box-shadow:0 4px 14px rgba(176,80,122,.18)}
+.tier .eyebrow{font-size:8px}.tier b{font-family:var(--serif);font-weight:500;font-size:17px}.tier small{font-size:10px;color:var(--mut)}
+.sec{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}
+.sec b{font-weight:500}.sec span{font-size:10px;color:var(--accd)}
+.cal{background:#fff;border-radius:10px;padding:12px;margin-bottom:14px}
+.cal .mh{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);row-gap:2px;text-align:center;font-size:11px}
+.cg .dw{color:var(--mut);font-size:9px;padding:4px 0}
+.cg button{border:0;background:none;padding:6px 0;cursor:pointer;color:var(--ink);font-size:11px;transition:background .2s}
+.cg button.o{color:#cdbcc4;cursor:default}
+.cg button.in{background:var(--line)}
+.cg button.e{background:var(--accd);color:#fff;border-radius:6px}
+.cg button:not(.o):not(.e):hover{background:var(--bg2);border-radius:6px}
+.leg{display:flex;justify-content:space-between;font-size:10px;color:var(--mut);margin-top:10px}
+.addons{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.add{display:flex;gap:10px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;cursor:pointer;transition:border-color .2s}
+.add.on{border-color:var(--accd)}
+.add input{accent-color:var(--accd);margin-top:3px}
+.add .t{flex:1;font-size:11px;font-weight:500}.add .t small{display:block;font-weight:400;color:var(--mut);font-size:10px}
+.add em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--accd);white-space:nowrap}
+.sum{font-family:var(--mono);font-size:11px;color:#5d4a54;border-top:1px solid var(--line);padding-top:12px}
+.sum div{display:flex;justify-content:space-between;margin-bottom:6px}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin:10px 0 2px;font-family:var(--serif)}
+.tot span{font-size:16px}.tot b{font-size:28px;font-weight:500;color:var(--accd)}
+.tot b.bump{animation:bump .35s}
+@keyframes bump{50%{transform:scale(1.08)}}
+.small{font-size:10px;color:var(--mut);text-align:right;margin-bottom:12px}
+.go{width:100%;padding:13px;font-size:13px}
+.foot2{display:flex;justify-content:space-between;font-size:10px;color:var(--mut);margin-top:12px}
+.help{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:11px}
+.help i{width:30px;height:30px;border-radius:50%;background:var(--line)}
+.help b{display:block;font-size:12px;font-weight:500}.help span{flex:1;color:var(--mut)}.help a{color:var(--acc)}
+footer{padding:32px 6vw;border-top:1px solid var(--line);background:var(--bg2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:11px;color:var(--mut)}
+footer .logo{color:var(--ink);display:block;margin-bottom:6px}
+footer ul{display:flex;gap:18px;list-style:none;flex-wrap:wrap}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+nav ul a{color:inherit;padding-bottom:4px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+nav ul a:hover{color:#c0628a}
+nav ul a.cur{color:#8e3a5d;border-bottom-color:currentColor}
+html{scroll-behavior:smooth}
+#book{scroll-margin-top:80px}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="landingPage.html">Your Archive</a>
+<ul><li><a href="cameraRent.html" class="cur">Explore Cameras</a></li><li><a href="photoArchive.html">Photography Archive</a></li><li><a href="landingPage.html#how">How It Works</a></li><li><a href="cameraDetails.html#book">Pricing &amp; Accessories</a></li><li><a href="bookAndPayment.html">My Bookings</a></li><li><a href="landingPage.html#admin">Admin Portal</a></li></ul>
+<a class="btn" href="#book">Book a Camera</a></nav>
+<div class="crumbs"><span>Vault / Medium Format / Hasselblad / <b>X2D 100C</b></span><span class="st">VAULT STATUS: AVAILABLE FOR IMMEDIATE DISPATCH &nbsp;&nbsp; ARCHIVE SPECIMEN #HB-9104-X</span></div>
+
+<div class="layout">
+<main>
+ <div><span class="badge">MUSEUM SPECIMEN</span><span class="loc">Göteborg, Sweden</span></div>
+ <h1>Hasselblad X2D 100C</h1>
+ <p class="lede">Medium format mirrorless perfection featuring a 100-megapixel back-illuminated sensor, 16-bit color fidelity, and an integrated 1TB high-speed solid-state archive.</p>
+
+ <div class="panel">
+  <div class="main">
+   <div class="view p1" id="view">
+    <button class="zoom" aria-label="Zoom">⌕</button>
+    <svg viewBox="0 0 240 180" aria-label="Hasselblad X2D 100C"><rect x="20" y="40" width="200" height="100" rx="10" fill="#4a4a4d"/><rect x="20" y="40" width="200" height="22" rx="10" fill="#2f2f32"/><rect x="40" y="26" width="46" height="18" rx="3" fill="#2f2f32"/><circle cx="120" cy="92" r="46" fill="#1f1f22"/><circle cx="120" cy="92" r="36" fill="#2c2c30" stroke="#6b6b70" stroke-width="3"/><circle cx="120" cy="92" r="22" fill="#14161c"/><circle cx="112" cy="84" r="6" fill="#5b6a8a" opacity=".6"/><rect x="176" y="50" width="30" height="8" rx="2" fill="#9a9a9e"/></svg>
+   </div>
+   <span class="ser">SERIAL: NO. 42104-E &nbsp;|&nbsp; GRADE: ARCHIVAL MINT (99/100)</span>
+  </div>
+  <div class="thumbs" id="thumbs"><button class="p1 on" aria-label="View 1"></button><button class="p2" aria-label="View 2"></button><button class="p3" aria-label="View 3"></button><button class="p4" aria-label="View 4"></button></div>
+ </div>
+
+ <div class="panel video">
+  <div class="vhead"><span>◉ CURATOR TECHNICAL MASTERCLASS</span><span>ARCHIVE ESSENTIALS</span></div>
+  <div class="vid"><button class="play" aria-label="Play video">▶</button><h3>Mastering 16-Bit Color Science &amp; Leaf Shutter</h3><p>With Master Conservator Elena Rostova · 14 min tutorial</p><span class="res">1080p 60fps</span></div>
+ </div>
+
+ <div class="proofs">
+  <div class="phead"><div><span class="eyebrow">Archival Proofs</span><h2 style="font-size:20px">Shot on X2D 100C with XCD 55mm f/2.5 V</h2></div><div><button id="pp" aria-label="Previous">‹</button><button id="pn" aria-label="Next">›</button></div></div>
+  <div class="track" id="track">
+   <div class="proof"><div class="top">Your Archive</div><div class="ph p1"></div><b>Archival Portrait No. 04</b><small>ISO 64 · 1/800s · f/2.8 · 16-Bit RAW</small></div>
+   <div class="proof"><div class="top">Your Archive</div><div class="ph p4"></div><b>Brutalist Pavilion Study</b><small>ISO 100 · 1/250s · f/8.0 · 16-Bit RAW</small></div>
+   <div class="proof"><div class="top">Your Archive</div><div class="ph p2"></div><b>Botanical Flora Spec</b><small>ISO 64 · 1/500s · f/4.0</small></div>
+  </div>
+ </div>
+
+ <div class="specs">
+  <h2>Archival Technical Specifications</h2>
+  <p>Validated under rigorous laboratory standards before and after every dispatch.</p>
+  <div class="row"><div><b>Sensor System</b><small>Format &amp; Effective Area</small></div><span>100MP BSI CMOS (43.8 × 32.9 mm)</span></div>
+  <div class="row"><div><b>Color Depth &amp; Science</b><small>Quantization Fidelity</small></div><span>16-Bit Color Depth · HNCS (281 Trillion Colors)</span></div>
+  <div class="row"><div><b>Dynamic Range</b><small>Latitude Range</small></div><span>Up to 15 Stops (16-Bit Raw Profile)</span></div>
+  <div class="row"><div><b>Image Stabilization</b><small>In-Body Compensation</small></div><span>5-Axis 7-Stop In-Body Stabilization (IBIS)</span></div>
+  <div class="row"><div><b>Internal Archival Storage</b><small>Primary Drive</small></div><span>1TB Built-in NVMe High-Speed SSD (2850 MB/s Write)</span></div>
+  <div class="row"><div><b>Secondary Media Bay</b><small>Expansion Slot</small></div><span>1× CFexpress Type B Slot (Up to 512GB Verified)</span></div>
+  <div class="row"><div><b>Autofocus System</b><small>Detection Type</small></div><span>294 Phase Detection Autofocus (PDAF) Zones</span></div>
+  <div class="row"><div><b>Shutter Architecture</b><small>Synchronization Type</small></div><span>Central Lens Leaf Shutter up to 1/4000s Full Flash Sync</span></div>
+ </div>
+
+ <div class="panel kit">
+  <h3>The Vault Pelican Dispatch Kit</h3><p>Delivered in custom laser-cut dense foam flight case (Pelican 1510 Air)</p>
+  <div class="kg">
+   <div><b>3× OEM Batteries</b><span>3400mAh High-Capacity</span></div><div><b>Dual Battery Hub</b><span>65W GaN Quick Charger</span></div><div><b>Peak Design Slide</b><span>Curatorial Ash Edition</span></div>
+   <div><b>Sensor Cleaning Kit</b><span>Pre-moistened Clean Swabs</span></div><div><b>Metal Bayonet Hood</b><span>Front &amp; Rear Vault Caps</span></div><div><b>Pelican 1510 Vault</b><span>Waterproof &amp; TSA Lock Ready</span></div>
+  </div>
+ </div>
+</main>
+
+<aside id="book">
+ <div class="panel">
+  <div class="sec"><span class="eyebrow">Archival Rental Tier</span><span class="eyebrow">Minimum 2 days</span></div>
+  <div class="tiers" id="tiers">
+   <div class="tier on" data-r="185"><span class="eyebrow">Standard</span><br><b>$185</b><small>/ day</small></div>
+   <div class="tier" data-r="163.33"><span class="eyebrow">Weekend</span><br><b>$490</b><small>/ 3 days</small></div>
+   <div class="tier" data-r="164.29"><span class="eyebrow">Production</span><br><b>$1,150</b><small>/ week</small></div>
+  </div>
+  <div class="sec"><b>Select Rental Window</b><span id="cnt">3 Days Selected</span></div>
+  <div class="cal"><div class="mh"><b>October 2024</b><span>⇄</span></div><div class="cg" id="cg"></div>
+   <div class="leg"><span id="ld">● Dispatch: Oct 14 (10:00 AM)</span><span id="lr">● Return: Oct 17 (17:00 PM)</span></div></div>
+  <div class="sec"><b>Curated Archival Add-Ons</b><span style="color:var(--mut)">Optional</span></div>
+  <div class="addons" id="adds"></div>
+  <div class="sum" id="sum"></div>
+  <div class="tot"><span>Estimated Total</span><b id="tot">$825.00</b></div>
+  <div class="small">Includes insured vault courier</div>
+  <button class="btn go" onclick="location.href='bookAndPayment.html'">Proceed to Booking &amp; Vault Dispatch</button>
+  <div class="small" style="text-align:center;margin:8px 0 0">ID Verification &amp; COI Required upon Checkout</div>
+  <div class="foot2"><span>Zero-deposit for Verified Studios</span><span>Free Courier Cancellation 24h</span></div>
+ </div>
+ <div class="help"><i></i><span><b>Have Production Inquiries?</b>Consult with an archival camera technician.</span><a href="#">Chat Live</a></div>
+</aside>
+</div>
+
+<footer><div><span class="logo">Your Archive</span>© 2024 Your Archive. Museum Grade Optical Equipment &amp; Curatorial Rental Vault. All Rights Reserved.</div>
+<ul><li>Archival Standards</li><li>Insurance &amp; Provenance</li><li>Terms of Dispatch</li><li>Discretion Protocol</li><li>Contact Curators</li><li>Journal</li></ul></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+// gallery
+const view=$('view'),tb=[...$('thumbs').children];
+tb.forEach((b,i)=>b.onclick=()=>{tb.forEach(x=>x.classList.remove('on'));b.classList.add('on');view.className='view p'+(i+1)});
+// proofs
+const tr=$('track');$('pn').onclick=()=>tr.scrollBy({left:314});$('pp').onclick=()=>tr.scrollBy({left:-314});
+// booking
+let rate=185,start=14,end=17;
+const A=[{n:'Hasselblad XCD 38mm f/2.5 V',d:'Ultra-compact prime with mechanical push-pull manual focus ring.',p:65,s:'XCD 38mm f/2.5 Lens',on:1},
+{n:'Profoto B10X Duo Kit (2x 250Ws)',d:'High-speed sync strobe heads with Air Remote TTL-H.',p:55,s:'Profoto B10X Duo Kit'},
+{n:'Extra 1TB SSD & ProGrade Reader',d:'Sandisk Extreme Pro + Dual Slot CFexpress B reader.',p:15,s:'Extra 1TB SSD & Reader'},
+{n:'Archival Damage Protection Waiver',d:'Full zero-deductible coverage for accidental drops & optical scratches.',p:25,s:'Archival Protection',on:1}];
+const adds=$('adds');
+A.forEach(a=>{const l=document.createElement('label');l.className='add'+(a.on?' on':'');
+ l.innerHTML=`<input type="checkbox" ${a.on?'checked':''}><div class="t">${a.n}<small>${a.d}</small></div><em>+$${a.p} / day</em>`;
+ const c=l.querySelector('input');c.onchange=()=>{a.on=c.checked;l.classList.toggle('on',c.checked);calc()};adds.appendChild(l)});
+const cg=$('cg');
+function cal(){cg.innerHTML='';'MTWTFSS'.split('').forEach(d=>cg.insertAdjacentHTML('beforeend',`<div class="dw">${d}</div>`));
+ [30].forEach(d=>cg.insertAdjacentHTML('beforeend',`<button class="o" tabindex="-1">${d}</button>`));
+ for(let d=1;d<=31;d++){const b=document.createElement('button');b.textContent=d;
+  if(d===start||d===end)b.className='e';else if(end&&d>start&&d<end)b.className='in';
+  if(d<14&&d>0&&false)b.className='o';
+  b.onclick=()=>{if(!end||d<start){start=d;end=null}else if(d-start>=2){end=d}else{start=d;end=null}cal();calc()};cg.appendChild(b)}}
+const m=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+function calc(){
+ const days=end?end-start:0;
+ $('cnt').textContent=end?days+' Days Selected':'Select return date (min 2 days)';
+ $('ld').textContent='● Dispatch: Oct '+start+' (10:00 AM)';$('lr').textContent=end?'● Return: Oct '+end+' (17:00 PM)':'● Return: —';
+ let rows=[['Camera Body ('+days+' Days × $'+(Math.round(rate*100)/100)+')',rate*days]],t=rate*days;
+ A.filter(a=>a.on).forEach(a=>{rows.push([a.s+' ('+days+' Days × $'+a.p+')',a.p*days]);t+=a.p*days});
+ $('sum').innerHTML=rows.map(r=>`<div><span>${r[0]}</span><span>${m(r[1])}</span></div>`).join('');
+ const el=$('tot');el.textContent=m(t);el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump')}
+[...$('tiers').children].forEach(t=>t.onclick=()=>{[...$('tiers').children].forEach(x=>x.classList.remove('on'));t.classList.add('on');rate=+t.dataset.r;calc()});
+cal();calc();
+</script>
+</body>
+</html>
