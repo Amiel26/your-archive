@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Archive — Museum-Grade Camera Rental</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf1f5;--bg2:#fbe8f0;--card:#fff;--ink:#2b1d24;--mut:#8a7480;--acc:#d4789c;--accd:#c0628a;--line:#f1d3e0;
+--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+a{color:inherit;text-decoration:none}
+.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,4vw,38px);line-height:1.15}
+.btn{display:inline-block;background:var(--acc);color:#fff;border:0;border-radius:6px;padding:8px 14px;font:500 12px var(--sans);cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--accd)}
+section{padding:72px 6vw}
+.wrap{max-width:1100px;margin:0 auto}
+.alt{background:var(--bg2)}
+/* nav */
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;background:rgba(253,241,245,.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);gap:16px}
+.logo{font-family:var(--serif);font-style:italic;font-size:18px}
+nav ul{display:flex;gap:22px;list-style:none;font-size:12px;color:var(--mut)}
+@media(max-width:860px){nav ul{display:none}}
+/* hero */
+.hero{text-align:center;padding-top:56px;overflow:hidden}
+.pill{display:inline-block;font-size:10px;letter-spacing:.2em;color:var(--acc);border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 12px;margin-bottom:14px}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,6vw,58px);line-height:1.1}
+.hero p.sub{color:var(--mut);max-width:520px;margin:14px auto 36px}
+.stage{position:relative;height:430px;perspective:1400px;margin:0 auto;max-width:1100px;touch-action:pan-y;user-select:none}
+.slide{position:absolute;left:50%;top:0;width:min(440px,78vw);background:var(--card);border-radius:14px;padding:10px 10px 14px;text-align:left;
+ box-shadow:0 18px 50px rgba(192,98,138,.18);transition:transform .9s cubic-bezier(.22,.8,.25,1),opacity .9s,filter .9s;cursor:pointer;will-change:transform}
+.slide .ph{height:230px;border-radius:10px;position:relative;overflow:hidden}
+.slide .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);transform:translateX(-120%)}
+.slide.on .ph::after{animation:sheen 3.2s ease-in-out infinite 1s}
+@keyframes sheen{60%,100%{transform:translateX(120%)}}
+.tag{position:absolute;top:10px;left:10px;font-size:9px;letter-spacing:.14em;background:#fff;color:var(--ink);padding:3px 8px;border-radius:99px;z-index:2}
+.slide h3{font-family:var(--serif);font-weight:400;font-size:19px;margin:12px 6px 2px}
+.slide .meta{font-size:11px;color:var(--mut);margin:0 6px}
+.slide p{font-size:12px;color:#5d4a54;margin:8px 6px}
+.slide .ft{display:flex;justify-content:space-between;align-items:center;margin:8px 6px 0;font-size:11px;color:var(--mut)}
+.arrow{position:absolute;top:150px;z-index:30;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--acc);cursor:pointer;font-size:16px;transition:transform .2s}
+.arrow:hover{transform:scale(1.12)}
+.arrow.l{left:2vw}.arrow.r{right:2vw}
+.dots{display:flex;justify-content:center;gap:6px;margin:18px 0 8px}
+.dots i{width:6px;height:6px;border-radius:99px;background:var(--line);transition:all .4s;cursor:pointer;overflow:hidden;position:relative}
+.dots i.on{width:34px;background:var(--line)}
+.dots i.on::after{content:"";position:absolute;inset:0;background:var(--acc);transform-origin:left;animation:fill var(--dur,4s) linear forwards}
+.paused .dots i.on::after{animation-play-state:paused}
+@keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.hint{font-size:11px;color:var(--mut)}
+/* gradients as placeholder photography */
+.g1{background:linear-gradient(160deg,#e9c4c0,#b98274 55%,#7a5149)}
+.g2{background:linear-gradient(160deg,#cfd3d6,#8b9298 55%,#3b4046)}
+.g3{background:linear-gradient(160deg,#f4d9a8,#d99a6a 55%,#8a5a49)}
+.g4{background:linear-gradient(160deg,#e8e6e4,#9c9a98 55%,#262626)}
+.g5{background:linear-gradient(160deg,#d6c9bb,#8d8c88 55%,#4b4742)}
+.g6{background:linear-gradient(160deg,#c9d6cf,#7f9a92 55%,#35504a)}
+.g7{background:linear-gradient(160deg,#f2c9a0,#c97e5b 55%,#5c3a35)}
+/* vault */
+.head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{font-size:11px;padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--mut);cursor:pointer}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:var(--card);border-radius:14px;padding:14px;box-shadow:0 8px 28px rgba(192,98,138,.1);transition:transform .3s}
+.card:hover{transform:translateY(-4px)}
+.cardtop{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.1em;color:var(--mut);margin-bottom:10px}
+.cardtop b{color:var(--acc);font-weight:500}
+.card .ph{height:150px;border-radius:10px;background:var(--bg)}
+.card .kind{font-size:9px;letter-spacing:.14em;color:var(--acc);margin:12px 0 2px}
+.card h3{font-family:var(--serif);font-weight:400;font-size:19px}
+.card .sub{font-size:11px;color:var(--mut);margin-bottom:10px}
+.spec{display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid var(--line)}
+.spec span:first-child{color:var(--mut)}
+.price{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.price b{font-family:var(--serif);font-size:22px;font-weight:400}
+.price small{display:block;font-size:10px;color:var(--mut)}
+.more{display:block;text-align:center;margin-top:24px;font-size:12px;color:var(--acc)}
+/* archive */
+.arch{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.arch .big,.arch .sm{border-radius:12px;position:relative;overflow:hidden;color:#fff;display:flex;align-items:flex-end}
+.arch .big{min-height:440px;grid-row:span 2}
+.arch .sm{min-height:212px}
+.arch .cap{padding:14px;width:100%;background:linear-gradient(transparent,rgba(30,15,22,.65));font-size:11px}
+.arch .cap b{display:block;font-family:var(--serif);font-weight:400;font-size:16px}
+@media(max-width:760px){.arch{grid-template-columns:1fr}.arch .big{grid-row:auto;min-height:320px}}
+/* classes */
+.tile{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 8px 28px rgba(192,98,138,.1)}
+.tile .ph{height:150px;position:relative}
+.tile .ph span{position:absolute;bottom:8px;left:8px;background:rgba(43,29,36,.7);color:#fff;font-size:9px;letter-spacing:.1em;padding:3px 8px;border-radius:99px}
+.tile div.b{padding:14px}
+.tile h3{font-family:var(--serif);font-weight:400;font-size:17px;margin:4px 0 6px}
+.tile .eyebrow{color:var(--acc)}
+/* steps */
+.steps{text-align:center}
+.steps .intro{color:var(--mut);max-width:520px;margin:10px auto 32px}
+.step{background:var(--card);border-radius:12px;padding:18px;text-align:left;border:1px solid var(--line)}
+.step .n{font-family:var(--serif);color:var(--acc);font-size:20px;margin-bottom:6px}
+.step h3{font-family:var(--serif);font-weight:400;font-size:17px;margin-bottom:6px}
+.step p{font-size:12px;color:#5d4a54;margin-bottom:12px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+/* quotes */
+.quote{background:var(--card);border-radius:12px;padding:22px;border:1px solid var(--line)}
+.quote .st{color:var(--acc);letter-spacing:3px;margin-bottom:10px}
+.quote p{font-family:var(--serif);font-style:italic;font-size:16px;line-height:1.55;margin-bottom:16px}
+.who{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding-top:12px;font-size:12px}
+.who i{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--acc),#f0b8cd)}
+.who small{display:block;color:var(--mut);font-size:11px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+/* cta */
+.cta{text-align:left}
+.cta form{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 8px}
+.cta input{flex:1;min-width:220px;max-width:320px;padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;font:13px var(--sans);color:var(--ink)}
+.cta small{color:var(--mut);font-size:11px}
+footer{padding:36px 6vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:11px;color:var(--mut)}
+footer .logo{color:var(--ink);display:block;margin-bottom:6px}
+footer ul{display:flex;gap:18px;list-style:none;flex-wrap:wrap}
+/* lightbox */
+#lb{position:fixed;inset:0;background:rgba(43,29,36,.85);display:none;align-items:center;justify-content:center;z-index:50;padding:5vw}
+#lb.open{display:flex;animation:fade .3s}
+#lb .box{width:min(820px,100%);height:min(520px,70vh);border-radius:14px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+#lb .box p{position:absolute;bottom:0;left:0;right:0;padding:18px;color:#fff;background:linear-gradient(transparent,rgba(30,15,22,.7));border-radius:0 0 14px 14px;font-family:var(--serif);font-size:18px}
+@keyframes fade{from{opacity:0}}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+
+/* admin */
+.adm-only{display:none!important}
+body.admin .adm-only{display:inline-flex!important}
+.edit{position:absolute;top:10px;right:10px;z-index:6;align-items:center;background:#fff;border:1px solid var(--line);color:var(--accd);border-radius:99px;font:500 11px var(--sans);padding:4px 11px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.tag{text-transform:uppercase}
+.card .ph,.tile .ph{position:relative}
+.card .ph.noimg::before{content:"◎";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:44px;color:var(--line)}
+.vplay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;border:0;background:var(--acc);color:#fff;cursor:pointer;font-size:16px;animation:ring 2.4s infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(212,120,156,.6)}70%,100%{box-shadow:0 0 0 14px rgba(212,120,156,0)}}
+.tile .ph[data-v]{cursor:pointer}
+#admBtn{position:fixed;right:16px;bottom:16px;z-index:40;background:#fff;border:1px solid var(--line);color:var(--accd);border-radius:99px;padding:8px 14px;font:500 12px var(--sans);cursor:pointer;box-shadow:0 6px 20px rgba(192,98,138,.2)}
+body.admin #admBtn{display:none}
+#admbar{display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:40;background:var(--ink);color:#fff;border-radius:99px;padding:8px 10px 8px 18px;gap:10px;align-items:center;font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+body.admin #admbar{display:flex}
+#admbar button{border:0;border-radius:99px;padding:6px 12px;font:500 11px var(--sans);cursor:pointer;background:rgba(255,255,255,.15);color:#fff}
+#admbar #admExit{background:var(--acc)}
+.mdl{position:fixed;inset:0;background:rgba(43,29,36,.7);display:none;align-items:center;justify-content:center;z-index:60;padding:4vw;overflow:auto}
+.mdl.open{display:flex;animation:fade .25s}
+.mbox{background:#fff;border-radius:14px;padding:22px;width:min(580px,100%);max-height:90vh;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.mbox h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:14px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--mut)}
+.fld.full{grid-column:1/-1}
+.fld input,.fld textarea,.fld select{border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:13px var(--sans);color:var(--ink);background:var(--bg);width:100%}
+.fld small{font-size:10px}
+.up{display:flex;gap:12px;align-items:center}
+.pv{width:96px;height:68px;border-radius:8px;background:var(--bg2) center/cover;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--mut);flex:none}
+.mact{display:flex;gap:8px;margin-top:18px;align-items:center}
+.gh{background:none;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:8px 12px;font:500 12px var(--sans);cursor:pointer}
+#fdel{color:#b3374f}
+.vbox{width:min(900px,100%);background:#1d1217}
+.vbox .gh{color:#fff;border-color:rgba(255,255,255,.3);margin-bottom:12px}
+.vr{position:relative;padding-top:56.25%}
+.vr iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:10px}
+.lnk{display:inline-block;margin-top:10px;font-size:12px;color:var(--acc)}
+@media(max-width:520px){.fgrid{grid-template-columns:1fr}}
+.slide .cam{display:inline-block;margin-bottom:4px;padding:2px 9px;border-radius:99px;background:var(--acc);color:#fff;font-weight:600;font-size:11px;letter-spacing:.02em;box-shadow:0 2px 8px rgba(212,120,156,.35)}
+nav ul a{color:inherit;padding-bottom:4px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+nav ul a:hover{color:#c0628a}
+nav ul a.cur{color:#8e3a5d;border-bottom-color:currentColor}
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:70px}
+</style>
+</head>
+<body>
+<nav>
+ <a class="logo" href="landingPage.html">Your Archive</a>
+ <ul><li><a href="cameraRent.html">Explore Cameras</a></li><li><a href="photoArchive.html">Photography Archive</a></li><li><a href="#how">How It Works</a></li><li><a href="cameraDetails.html#book">Pricing &amp; Accessories</a></li><li><a href="bookAndPayment.html">My Bookings</a></li><li id="navAdm" style="cursor:pointer"><a href="#admin">Admin Portal</a></li></ul>
+ <a class="btn" href="#vault">Book a Camera</a>
+</nav>
+
+<section class="hero" id="hero">
+ <span class="pill">YOUR ARCHIVE PRESENTS</span>
+ <h1>Every Camera Has a Story.</h1>
+ <p class="sub">Explore moments, perspectives, and creative works captured through cameras available at Your Archive.</p>
+ <div class="adm-only" style="margin-bottom:14px"><button class="btn" id="addSlide">＋ Add slide</button></div>
+ <div class="stage" id="stage" aria-roledescription="carousel" aria-label="Photography showcase"></div>
+ <button class="arrow l" id="prev" aria-label="Previous">&#8592;</button>
+ <button class="arrow r" id="next" aria-label="Next">&#8594;</button>
+ <div class="dots" id="dots"></div>
+ <p class="hint">Drag or swipe to rotate &nbsp;·&nbsp; Click center image for high-res archival lightbox</p>
+</section>
+
+<section id="vault">
+ <div class="wrap">
+  <span class="eyebrow">The Collection</span>
+  <h2>Curated Reserve Vault</h2>
+  <p style="color:var(--mut);margin-top:6px">Calibrated optics inspected before every courier departure.</p>
+  <div style="margin-top:14px"><button class="btn adm-only" id="addCam">＋ Upload camera</button></div>
+  <div class="chips"><span class="chip on">All Optical Vault (48)</span><span class="chip">Medium Format</span><span class="chip">Cinema Systems</span><span class="chip">Archival 35mm</span><span class="chip">Cooke &amp; Leica Glass</span></div>
+  <div class="grid3" id="camGrid" style="margin-top:28px">
+  </div>
+  <a class="more" href="cameraRent.html">Explore full 48-body vault ledger and cinema prime sets →</a>
+ </div>
+</section>
+
+<section class="alt" id="archive">
+ <div class="wrap">
+  <span class="eyebrow">Commission Provenance</span>
+  <h2 style="margin:4px 0 6px">The Photographic Archive</h2>
+  <p style="color:var(--mut);margin-bottom:26px;max-width:560px">Selected editorial spreads, stills, and high fashion journals captured by resident creators utilizing equipment dispatched from our vaults.</p>
+  <div class="arch">
+   <div class="big g1"><div class="cap"><b>Vogue Italia Commission · 'Terra Nova'</b>Photographed by Elena Vance in Palermo, Sicily · Shot on Hasselblad 907X 50C 38mm f/2.8</div></div>
+   <div class="sm g4"><div class="cap"><b>Brutalist Geometry Series</b>Kyoto Pavilion by M. Takahashi · Leica M11 Monochrom 50mm f/1.4</div></div>
+   <div class="sm g7"><div class="cap"><b>Documentary Feature 'Dune Light'</b>Cinematography by Marcus Bell · ARRI Mini LF, Cooke Anamorphic /i</div></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="head"><div><span class="eyebrow">Vault Education &amp; Calibration</span><h2>Curatorial Masterclasses</h2><p style="color:var(--mut);margin-top:6px">Master medium format depth-of-field, lens collimation, and color grading profiles.</p></div><div style="display:flex;gap:14px;align-items:center"><button class="btn adm-only" id="addCls">＋ Add video tutorial</button><a href="photoArchive.html#edu" style="color:var(--acc);font-size:12px">Browse Library ↗</a></div></div>
+  <div class="grid3" id="clsGrid">
+  </div>
+ </div>
+</section>
+
+<section class="alt steps" id="how">
+ <div class="wrap">
+  <span class="eyebrow">Discretion &amp; Care</span>
+  <h2 style="margin-top:4px">The Archival Dispatch Protocol</h2>
+  <p class="intro">Four seamless steps engineered to ensure perfect optical integrity from our vault to your production set.</p>
+  <div class="grid4">
+   <div class="step"><div class="n">01</div><h3>Curate &amp; Reserve</h3><p>Select specific serialized bodies, vintage lens sets, and calibrated media cards. Choose custom shoot dates and vault hold windows.</p><span class="eyebrow">Step 01 · Online Vault</span></div>
+   <div class="step"><div class="n">02</div><h3>Identity Verification</h3><p>Discreet 5 minute creator provenance screening. Instant insurance binding through our Lloyds accredited archival partnership.</p><span class="eyebrow">Step 02 · Discretion</span></div>
+   <div class="step"><div class="n">03</div><h3>White Glove Dispatch</h3><p>Custom laser cut waterproof Pelican™ Storm case arrival. Pre charged batteries, sensor report certificate, and tamper seal intact.</p><span class="eyebrow">Step 03 · Courier Hand Off</span></div>
+   <div class="step"><div class="n">04</div><h3>Vault Return &amp; Check</h3><p>Pre labeled return courier pickup. Optical alignment verification and security deposit release processed within 4 hours of arrival.</p><span class="eyebrow">Step 04 · Inspection</span></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <span class="eyebrow">Verified Creator Praises</span>
+  <h2 style="margin:4px 0 24px">Voices from the Set</h2>
+  <div class="grid2">
+   <div class="quote"><div class="st">★★★★★</div><p>"When shooting high-end jewelry for Cartier, sensor micro-cleanliness is non-negotiable. Your Archive dispatched a Hasselblad X2D with a pristine inspection log. The camera was utterly flawless."</p><div class="who"><i></i><div>Camille de la Tour<small>Editorial Director, Studio Vendôme Paris</small></div></div></div>
+   <div class="quote"><div class="st">★★★★★</div><p>"We chartered our crew into the Scottish Highlands for a BBC documentary. The ARRI Mini LF package was sealed in a custom storm flight case with backup lithium blocs. Not a single hitch in freezing drizzle."</p><div class="who"><i></i><div>Alasdair Mackay, BSC<small>Documentary Cinematographer, National Geographic</small></div></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="alt cta">
+ <div class="wrap">
+  <span class="eyebrow">Private Ledger Access</span>
+  <h2 style="margin:4px 0 8px">Reserve Your Next Commission</h2>
+  <p style="color:var(--mut);max-width:520px">Receive private notifications when rare optical glass (Noctilux f/0.95, Hasselblad CF lenses, Master Anamorphics) enters our vault rotation.</p>
+  <form onsubmit="event.preventDefault();this.querySelector('button').textContent='You’re on the ledger'"><input type="email" placeholder="curator@production.com" aria-label="Email" required><button class="btn">Join Archive Ledger</button></form>
+  <small>Discreet monthly dispatches. Zero commodity marketing.</small>
+ </div>
+</section>
+
+<footer>
+ <div><span class="logo">Your Archive</span>© 2024 Your Archive. Museum-Grade Optical Equipment &amp; Curatorial Rental Vault. All Rights Reserved.</div>
+ <ul><li>Archival Standards</li><li>Insurance &amp; Provenance</li><li>Terms of Dispatch</li><li>Discretion Protocol</li><li>Contact Curators</li><li>Journal</li></ul>
+</footer>
+
+<div id="lb" role="dialog" aria-modal="true"><div class="box" id="lbbox"><p id="lbcap"></p></div></div>
+
+
+<div id="fm" class="mdl" role="dialog" aria-modal="true"><form id="fform" class="mbox"><h3 id="ft"></h3><div class="fgrid" id="ff"></div>
+ <div class="mact"><button type="button" class="gh" id="fdel">Delete</button><span style="flex:1"></span><button type="button" class="gh" id="fcan">Cancel</button><button class="btn" style="padding:9px 18px">Save</button></div></form></div>
+<div id="vm" class="mdl" role="dialog" aria-modal="true"><div class="mbox vbox"><button class="gh" id="vclose">✕ Close</button><div id="vbody"></div></div></div>
+<div id="admbar"><span>Admin mode</span><button id="admReset">Reset content</button><button id="admExit">Exit</button></div>
+<button id="admBtn">⚙ Admin</button>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const G=['g1','g2','g3','g4','g5','g6','g7'],rg=()=>G[Math.floor(Math.random()*7)];
+const bg=o=>o.img?` style="background:url('${o.img}') center/cover"`:'';
+const SL=(t,g,h,m,p,c,l)=>({t,g,img:'',h,m,p,c,l});
+const C=(id,kind,name,sub,g,day,week,s)=>({status:'Available Now',id,kind,name,sub,g,img:'',day,week,a1:s[0],v1:s[1],a2:s[2],v2:s[3],a3:s[4],v3:s[5]});
+const K=(dur,cat,title,desc,inst,g)=>({dur,cat,title,desc,inst,g,img:'',video:''});
+const DEF={
+ slides:[
+  SL("FASHION PHOTOGRAPHY","g1","Vogue Italia: Terra Nova","Elena Vance · Palermo","Luminous Mediterranean high-fashion editorial exploring warm linen drapery and archival color depth.","Hasselblad 907X 50C","XCD 55mm f/2.5 · 100 MP CMOS"),
+  SL("ARCHITECTURE PHOTOGRAPHY","g4","Monolithic Echoes","Soren Lindqvist · Kyoto","Hyper-detailed geometric study of raw concrete and deep shadow gradients in Kyoto.","Fujifilm GFX 100 II","GF 23mm f/4 · 102MP Sensor"),
+  SL("STREET PHOTOGRAPHY","g2","Rain in the Marais","M. Takahashi · Paris","Silver-gelatin tonal gradients and high-contrast silhouettes under umbrellas on Parisian stone.","Leica M11 Monochrom","Summilux 35mm f/1.4 · B&W BSI"),
+  SL("LANDSCAPE PHOTOGRAPHY","g6","Highland Mist & Basalt","Alasdair Mackay · Isle of Skye","100-megapixel textural clarity through freezing Atlantic coastal squalls on the Isle of Skye.","Hasselblad X2D 100C","38mm f/2.8 · 16-Bit RAW"),
+  SL("DOCUMENTARY PHOTOGRAPHY","g7","Dune Light: Arabian Sands","Marcus Bell, BSC · Rub' al Khali","Anamorphic flare sweeps and golden-hour dynamic range across the Rub' al Khali expanse.","ARRI Alexa Mini LF","Cooke Anamorphic /i · ARRIRAW"),
+  SL("PORTRAIT PHOTOGRAPHY","g3","Golden Hour Studio","Camille de la Tour · Paris","Soft skin-tone rolloff and window light captured with calibrated medium format glass.","Hasselblad X2D 100C","XCD 80mm f/1.9"),
+  SL("EDITORIAL PHOTOGRAPHY","g5","Concrete & Linen","Sofia Lindqvist · Milan","A quiet study in texture, pairing hard architecture with soft draped fabric.","Fujifilm GFX 100 II","GF 55mm f/1.7")],
+ cams:[
+  C("#ARC-R50","Mirrorless","EOS R50 (RF-S18-45mm f/4.5-6.3 IS STM)","Chrome Edition with Optical Viewfinder kit","g1",175,890,["Sensor","50 MP (43.8 × 32.9 mm)","Dynamic Range","14 Stops 16 Bit RAW","Condition Grade","Archive Mint 9.9"]),
+  C("#ARC-X-A3","Mirrorless","Fujifilm X-A3","Dedicated BSI B&W Sensor with 256GB Internal","g2",145,720,["Sensor","24.2-megapixel APS-C CMOS sensorm","ISO Ceiling","ISO 125 to 200,000","Condition Grade","Archive Mint 10.0"]),
+  C("#ARC-Pocket3","vlogging and action camera","DJI Osmo Pocket 3 ","a compact, pocket-sized handheld vlogging and action camera equipped with a motorized 3-axis mechanical gimbal stabilizer","g5",165,820,["Sensor","1 1-inch CMOS sensor with a 20mm f/2.0","Video Capture","4K resolution and 120 fps","Condition Grade","Archive Mint 9.8"]),
+  C("#ARC-Pocket 4","action camera","DJI Osmo Action 4","102MP II HS Sensor with 8-Stop In Body IS","g5",165,820,["Sensor","0-bit and D-Log M color performance","Video Capture","8K/30p & 4K/60p 4:2:2 10 Bit","Condition Grade","Archive Mint 9.8"]),
+  C("#ARC-FZ55","point-and-shoot digital camera","Kodak PIXPRO FZ55","102MP II HS Sensor with 8-Stop In Body IS","g5",165,820,["Sensor","16.35MP effective (16.76MP total) 1/2.3-inch CMOS sensor","Video Capture","1080/30fps ","Condition Grade","Archive Mint 9.8"])],
+ classes:[
+  K("42 MIN MASTERCLASS","Optical Fundamentals","The 16-Bit RAW Color Spectrum on Hasselblad X2D","Extracting micro contrast and skin tone nuances using Phocus studio calibration profiles.","Julian Thorne","g3"),
+  K("28 MIN GUIDE","Rangefinder Precision","Split Image Manual Focus on Leica M Systems","Zone focusing techniques and hyperfocal calibration for high pressure street and runway shoots.","Sofia Lindqvist","g2"),
+  K("55 MIN DEEP DIVE","Production Workflow","ARRI Mini LF: Full ARRIRAW Color Science","Setting up internal motorized ND filters, false color IRE exposure indexes, and log curves.","Devendra Patel","g7")]
+};
+const KEY='yourArchive.v1';
+let st;try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!st||!st.slides||!st.cams||!st.classes)st=JSON.parse(JSON.stringify(DEF));
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){alert('Browser storage is full. Try a smaller image or delete an item.')}};
+
+/* ---------- carousel ---------- */
+const stage=$('stage'),dots=$('dots'),hero=$('hero'),DUR=4000;
+let cur=0,timer=null,N=0,slides=[],dotEls=[];
+function buildCar(){
+ stage.innerHTML='';dots.innerHTML='';N=st.slides.length;if(cur>=N)cur=N-1;
+ st.slides.forEach((s,i)=>{
+  const d=document.createElement('article');d.className='slide';
+  d.innerHTML=`<div class="ph ${s.g}"${bg(s)}><span class="tag">${esc(s.t)}</span><button class="edit adm-only">✎ Edit</button></div><h3>${esc(s.h)}</h3><div class="meta">${esc(s.m)}</div><p>${esc(s.p)}</p><div class="ft"><span><b class="cam">${esc(s.c)}</b><br>${esc(s.l)}</span><a class="btn" href="photoArchive.html" onclick="event.stopPropagation()">Explore Photos →</a></div>`;
+  d.onclick=()=>{i===cur?openLB(s):go(i)};
+  d.querySelector('.edit').onclick=e=>{e.stopPropagation();editSlide(i)};
+  stage.appendChild(d);
+  const dt=document.createElement('i');dt.onclick=()=>go(i);dots.appendChild(dt);
+ });
+ slides=[...stage.children];dotEls=[...dots.children];render();restart();
+}
+function off(i){let o=(i-cur)%N;if(o>N/2)o-=N;if(o<-N/2)o+=N;return o}
+function render(){
+ if(!N)return;const w=slides[0].offsetWidth;
+ slides.forEach((el,i)=>{
+  const o=off(i),a=Math.abs(o);
+  el.classList.toggle('on',o===0);
+  el.style.transform=`translateX(calc(-50% + ${o*w*.62}px)) translateZ(${-a*140}px) rotateY(${-o*28}deg) scale(${o===0?1:.86})`;
+  el.style.opacity=a>2?0:a===2?.45:o===0?1:.8;
+  el.style.zIndex=10-a;
+  el.style.filter=o===0?'none':'saturate(.85) blur('+(a*.6)+'px)';
+  el.style.pointerEvents=a>2?'none':'auto';
+ });
+ dotEls.forEach((d,i)=>{d.classList.remove('on');if(i===cur){void d.offsetWidth;d.classList.add('on')}});
+}
+function go(i){if(!N)return;cur=(i+N)%N;render();restart()}
+const paused=()=>hero.classList.contains('paused')||document.querySelector('.mdl.open');
+function restart(){clearTimeout(timer);if(N>1&&!matchMedia('(prefers-reduced-motion:reduce)').matches&&!paused())timer=setTimeout(()=>go(cur+1),DUR)}
+$('prev').onclick=()=>go(cur-1);$('next').onclick=()=>go(cur+1);
+stage.addEventListener('mouseenter',()=>{hero.classList.add('paused');clearTimeout(timer)});
+stage.addEventListener('mouseleave',()=>{hero.classList.remove('paused');restart()});
+let sx=null;
+stage.addEventListener('pointerdown',e=>{sx=e.clientX});
+window.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>50)go(cur+(dx<0?1:-1))});
+const lb=$('lb');
+function openLB(s){const b=$('lbbox');b.className='box '+s.g;b.style.background=s.img?`url('${s.img}') center/contain no-repeat #1d1217`:'';$('lbcap').textContent=s.h+' — '+s.c;lb.classList.add('open')}
+lb.onclick=()=>lb.classList.remove('open');
+dots.style.setProperty('--dur',DUR+'ms');
+window.addEventListener('resize',render);
+
+/* ---------- vault ---------- */
+function drawCams(){
+ const g=$('camGrid');
+ g.innerHTML=st.cams.map((c,i)=>`<article class="card"><div class="cardtop"><b>● ${esc(c.status)}</b><span>ID: ${esc(c.id)}</span></div><div class="ph ${c.g}${c.img?'':' noimg'}"${bg(c)}><button class="edit adm-only" data-i="${i}">✎ Edit</button></div><div class="kind">${esc(c.kind)}</div><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div>${[1,2,3].filter(n=>c['a'+n]).map(n=>`<div class="spec"><span>${esc(c['a'+n])}</span><span>${esc(c['v'+n])}</span></div>`).join('')}<div class="price"><div><b>₱${esc(c.day)}</b> / day<small>₱${esc(c.week)} / 7+ Days</small></div><button class="btn" onclick="location.href='cameraDetails.html'">Reserve Camera</button></div></article>`).join('');
+ g.querySelectorAll('.edit').forEach(b=>b.onclick=()=>editCam(+b.dataset.i));
+}
+
+/* ---------- masterclasses / video ---------- */
+function parseVid(u){
+ let m;
+ if(m=u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/))return{type:'yt',src:`https://www.youtube.com/embed/${m[1]}?autoplay=1&rel=0`,thumb:`https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`};
+ if(m=u.match(/vimeo\.com\/(?:video\/)?(\d+)/))return{type:'vm',src:`https://player.vimeo.com/video/${m[1]}?autoplay=1`};
+ if(/\.(mp4|webm|ogg)(\?|#|$)/i.test(u))return{type:'file'};
+ return{type:'link'};
+}
+function drawCls(){
+ const g=$('clsGrid');
+ g.innerHTML=st.classes.map((c,i)=>{
+  const v=c.video?parseVid(c.video):null,img=c.img||(v&&v.thumb)||'';
+  return `<div class="tile"><div class="ph ${c.g}"${bg({img})}${c.video?` data-v="${i}"`:''}><span>${esc(c.dur)}</span>${c.video?'<button class="vplay" aria-label="Play tutorial">▶</button>':''}<button class="edit adm-only" data-i="${i}">✎ Edit</button></div><div class="b"><span class="eyebrow">${esc(c.cat)}</span><h3>${esc(c.title)}</h3><p style="font-size:12px;color:#5d4a54">${esc(c.desc)}</p><p style="font-size:11px;color:var(--mut);margin-top:8px">Instructor: ${esc(c.inst)}</p></div></div>`}).join('');
+ g.querySelectorAll('.edit').forEach(b=>b.onclick=e=>{e.stopPropagation();editCls(+b.dataset.i)});
+ g.querySelectorAll('[data-v]').forEach(p=>p.onclick=()=>playVideo(st.classes[+p.dataset.v].video));
+}
+function playVideo(u){
+ const v=parseVid(u),b=$('vbody');
+ if(v.type==='yt'||v.type==='vm')b.innerHTML=`<div class="vr"><iframe src="${v.src}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+ else if(v.type==='file')b.innerHTML=`<video controls autoplay src="${esc(u)}" style="width:100%;border-radius:10px"></video>`;
+ else{window.open(u,'_blank','noopener');return}
+ b.insertAdjacentHTML('beforeend',`<a class="lnk" href="${esc(u)}" target="_blank" rel="noopener">Open original link ↗</a>`);
+ $('vm').classList.add('open');clearTimeout(timer);
+}
+function closeV(){$('vbody').innerHTML='';$('vm').classList.remove('open');restart()}
+$('vclose').onclick=closeV;$('vm').onclick=e=>{if(e.target.id==='vm')closeV()};
+
+/* ---------- generic form ---------- */
+function readImg(f,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,1200/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.82))};im.src=r.result};r.readAsDataURL(f)}
+function closeForm(){$('fm').classList.remove('open');restart()}
+$('fcan').onclick=closeForm;$('fm').onclick=e=>{if(e.target.id==='fm')closeForm()};
+function form(title,F,o,onSave,onDel,check){
+ const p={...o},ff=$('ff');$('ft').textContent=title;
+ ff.innerHTML=F.map(x=>{
+  const w=x.h?'':' full';
+  if(x.type==='file')return `<div class="fld full"><span>${x.l}</span><div class="up"><div class="pv" data-pv="${x.k}"></div><div><input type="file" accept="image/*" data-f="${x.k}" style="padding:4px;margin-bottom:6px"><button type="button" class="gh" data-rm="${x.k}">Remove photo</button></div></div></div>`;
+  if(x.type==='area')return `<label class="fld${w}"><span>${x.l}</span><textarea data-k="${x.k}" rows="3">${esc(o[x.k])}</textarea></label>`;
+  if(x.type==='sel')return `<label class="fld${w}"><span>${x.l}</span><select data-k="${x.k}">${x.o.map(s=>`<option${s===o[x.k]?' selected':''}>${s}</option>`).join('')}</select></label>`;
+  return `<label class="fld${w}"><span>${x.l}</span><input data-k="${x.k}" value="${esc(o[x.k])}"${x.ph?` placeholder="${esc(x.ph)}"`:''}>${x.n?`<small>${x.n}</small>`:''}</label>`}).join('');
+ const pv=k=>{const e=ff.querySelector(`[data-pv="${k}"]`);e.style.backgroundImage=p[k]?`url('${p[k]}')`:'';e.textContent=p[k]?'':'No photo'};
+ F.filter(x=>x.type==='file').forEach(x=>pv(x.k));
+ ff.querySelectorAll('[data-f]').forEach(i=>i.onchange=()=>{const f=i.files[0];if(f)readImg(f,d=>{p[i.dataset.f]=d;pv(i.dataset.f)})});
+ ff.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{p[b.dataset.rm]='';pv(b.dataset.rm)});
+ $('fdel').style.display=onDel?'':'none';
+ $('fdel').onclick=()=>{if(confirm('Delete this item?')){onDel();closeForm()}};
+ $('fform').onsubmit=e=>{e.preventDefault();ff.querySelectorAll('[data-k]').forEach(el=>p[el.dataset.k]=el.value.trim());
+  const err=check&&check(p);if(err){alert(err);return}onSave(p);closeForm()};
+ clearTimeout(timer);$('fm').classList.add('open');
+}
+
+/* ---------- editors ---------- */
+const SF=[{k:'img',l:'Photo (upload)',type:'file'},{k:'t',l:'Tag shown on the photo',ph:'e.g. FASHION PHOTOGRAPHY'},{k:'h',l:'Title'},{k:'m',l:'Credit · Location'},{k:'p',l:'Description',type:'area'},{k:'c',l:'Camera',h:1},{k:'l',l:'Lens · Sensor',h:1}];
+function editSlide(i){const n=i<0;
+ form(n?'Add carousel slide':'Edit carousel slide',SF,n?SL('NEW PHOTOGRAPHY',rg(),'','','','',''):st.slides[i],
+  v=>{n?st.slides.push(v):st.slides[i]=v;save();buildCar();if(n)go(st.slides.length-1)},
+  n||st.slides.length<2?null:()=>{st.slides.splice(i,1);save();buildCar()})}
+const CF=[{k:'img',l:'Camera photo (upload)',type:'file'},{k:'status',l:'Status',type:'sel',o:['Available Now','Reserved','In Service'],h:1},{k:'id',l:'Vault ID',h:1,ph:'#ARC-XXX'},{k:'kind',l:'Category label',ph:'e.g. MODULAR MEDIUM FORMAT'},{k:'name',l:'Camera name'},{k:'sub',l:'Short description'},
+ {k:'a1',l:'Spec 1 label',h:1},{k:'v1',l:'Spec 1 value',h:1},{k:'a2',l:'Spec 2 label',h:1},{k:'v2',l:'Spec 2 value',h:1},{k:'a3',l:'Spec 3 label',h:1},{k:'v3',l:'Spec 3 value',h:1},{k:'day',l:'Price / day (₱)',h:1},{k:'week',l:'7+ Days (₱)',h:1}];
+function editCam(i){const n=i<0;
+ form(n?'Upload camera to the vault':'Edit camera',CF,n?C('#ARC-','','','',rg(),'','',['Sensor','','Dynamic Range','','Condition Grade','']):st.cams[i],
+  v=>{n?st.cams.push(v):st.cams[i]=v;save();drawCams()},n?null:()=>{st.cams.splice(i,1);save();drawCams()},
+  v=>!v.name?'Please enter a camera name.':'')}
+const KF=[{k:'video',l:'Video tutorial link',ph:'https://www.youtube.com/watch?v=…',n:'YouTube, Vimeo, or a direct .mp4 / .webm link'},{k:'img',l:'Cover image (optional — YouTube links get one automatically)',type:'file'},{k:'dur',l:'Duration label',ph:'e.g. 42 MIN MASTERCLASS',h:1},{k:'cat',l:'Category',h:1},{k:'title',l:'Title'},{k:'desc',l:'Description',type:'area'},{k:'inst',l:'Instructor'}];
+function editCls(i){const n=i<0;
+ form(n?'Add video tutorial':'Edit video tutorial',KF,n?K('','','','','',rg()):st.classes[i],
+  v=>{n?st.classes.push(v):st.classes[i]=v;save();drawCls()},n?null:()=>{st.classes.splice(i,1);save();drawCls()},
+  v=>!v.title?'Please enter a title.':v.video&&!/^https?:\/\//i.test(v.video)?'Please enter a full video link starting with https://':'')}
+$('addSlide').onclick=()=>editSlide(-1);$('addCam').onclick=()=>editCam(-1);$('addCls').onclick=()=>editCls(-1);
+
+/* ---------- admin mode ---------- */
+const setAdm=on=>document.body.classList.toggle('admin',on);
+$('admBtn').onclick=()=>setAdm(true);$('admExit').onclick=()=>setAdm(false);
+$('navAdm').onclick=()=>setAdm(!document.body.classList.contains('admin'));
+if(location.hash==='#admin')setAdm(true);
+$('admReset').onclick=()=>{if(confirm('Reset all slides, cameras and tutorials to the original content?')){st=JSON.parse(JSON.stringify(DEF));save();cur=0;buildCar();drawCams();drawCls()}};
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){lb.classList.remove('open');closeV();closeForm();return}
+ if(document.querySelector('.mdl.open')||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+ if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+buildCar();drawCams();drawCls();
+</script>
+</body>
+</html>

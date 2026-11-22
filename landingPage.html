@@ -169,6 +169,7 @@ nav ul a.cur{color:#8e3a5d;border-bottom-color:currentColor}
 html{scroll-behavior:smooth}
 [id]{scroll-margin-top:70px}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
 <body>
 <nav>
@@ -253,7 +254,7 @@ html{scroll-behavior:smooth}
   <span class="eyebrow">Private Ledger Access</span>
   <h2 style="margin:4px 0 8px">Reserve Your Next Commission</h2>
   <p style="color:var(--mut);max-width:520px">Receive private notifications when rare optical glass (Noctilux f/0.95, Hasselblad CF lenses, Master Anamorphics) enters our vault rotation.</p>
-  <form onsubmit="event.preventDefault();this.querySelector('button').textContent='You’re on the ledger'"><input type="email" placeholder="curator@production.com" aria-label="Email" required><button class="btn">Join Archive Ledger</button></form>
+  <form onsubmit="return joinLedger(event)"><input type="email" placeholder="curator@production.com" aria-label="Email" required><button class="btn">Join Archive Ledger</button></form>
   <small>Discreet monthly dispatches. Zero commodity marketing.</small>
  </div>
 </section>
@@ -269,7 +270,8 @@ html{scroll-behavior:smooth}
 <div id="fm" class="mdl" role="dialog" aria-modal="true"><form id="fform" class="mbox"><h3 id="ft"></h3><div class="fgrid" id="ff"></div>
  <div class="mact"><button type="button" class="gh" id="fdel">Delete</button><span style="flex:1"></span><button type="button" class="gh" id="fcan">Cancel</button><button class="btn" style="padding:9px 18px">Save</button></div></form></div>
 <div id="vm" class="mdl" role="dialog" aria-modal="true"><div class="mbox vbox"><button class="gh" id="vclose">✕ Close</button><div id="vbody"></div></div></div>
-<div id="admbar"><span>Admin mode</span><button id="admReset">Reset content</button><button id="admExit">Exit</button></div>
+<div id="admbar"><span>Admin mode</span><button id="admExit">Exit</button></div>
+<div id="lm" class="mdl" role="dialog" aria-modal="true"><form id="lform" class="mbox" style="width:min(380px,100%)"><h3>Admin sign in</h3><div class="fgrid"><label class="fld full"><span>Email</span><input id="lemail" type="email" required autocomplete="username"></label><label class="fld full"><span>Password</span><input id="lpass" type="password" required autocomplete="current-password"></label></div><p id="lerr" style="color:#b3374f;font-size:12px;margin-top:10px"></p><div class="mact"><span style="flex:1"></span><button type="button" class="gh" id="lcan">Cancel</button><button class="btn" style="padding:9px 18px">Sign in</button></div></form></div>
 <button id="admBtn">⚙ Admin</button>
 
 <script>
@@ -300,10 +302,41 @@ const DEF={
   K("28 MIN GUIDE","Rangefinder Precision","Split Image Manual Focus on Leica M Systems","Zone focusing techniques and hyperfocal calibration for high pressure street and runway shoots.","Sofia Lindqvist","g2"),
   K("55 MIN DEEP DIVE","Production Workflow","ARRI Mini LF: Full ARRIRAW Color Science","Setting up internal motorized ND filters, false color IRE exposure indexes, and log curves.","Devendra Patel","g7")]
 };
-const KEY='yourArchive.v1';
-let st;try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-if(!st||!st.slides||!st.cams||!st.classes)st=JSON.parse(JSON.stringify(DEF));
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){alert('Browser storage is full. Try a smaller image or delete an item.')}};
+const SB_URL='https://hvuckkuixbpuclgrniot.supabase.co',SB_KEY='sb_publishable_N0vMPc14oH2cCaZQAmiAKg_Sk08bOEM';
+const sb=window.supabase.createClient(SB_URL,SB_KEY);
+let st=JSON.parse(JSON.stringify(DEF)); // sample content, shown only if Supabase can't be reached
+const save=()=>{};
+const STATUS_OUT={available:'Available Now',maintenance:'In Service',retired:'Retired'},STATUS_IN={'Available Now':'available','In Service':'maintenance','Retired':'retired'};
+const pub=(b,p)=>p?sb.storage.from(b).getPublicUrl(p).data.publicUrl:'';
+async function loadAll(){
+ try{
+  const[s,c,t]=await Promise.all([
+   sb.from('hero_slides').select('*').order('sort_order').order('created_at'),
+   sb.from('cameras').select('id,code,name,subtitle,day_rate,week_rate,specs,status,image_path,categories(name)').order('created_at'),
+   sb.from('tutorials').select('*').order('sort_order').order('created_at')]);
+  const err=s.error||c.error||t.error;if(err)throw err;
+  st.slides=s.data.map((r,i)=>({dbid:r.id,t:r.tag,g:G[i%7],img:pub('site-media',r.image_path),image_path:r.image_path,h:r.title,m:r.credit||'',p:r.description||'',c:r.camera||'',l:r.lens_sensor||''}));
+  st.cams=c.data.map((r,i)=>{const x=r.specs||[],a=n=>x[n]?x[n].label:'',v=n=>x[n]?x[n].value:'';
+   return{dbid:r.id,status:STATUS_OUT[r.status]||'Available Now',id:'#'+r.code,kind:r.categories?r.categories.name:'',name:r.name,sub:r.subtitle||'',g:G[i%7],img:pub('camera-images',r.image_path),image_path:r.image_path,day:r.day_rate,week:r.week_rate,a1:a(0),v1:v(0),a2:a(1),v2:v(1),a3:a(2),v3:v(2)}});
+  st.classes=t.data.map((r,i)=>({dbid:r.id,dur:r.duration_label||'',cat:r.category||'',title:r.title,desc:r.description||'',inst:r.instructor||'',video:r.video_url||'',g:G[i%7],img:pub('site-media',r.cover_path),image_path:r.cover_path}));
+ }catch(e){console.error('Could not load from Supabase; showing sample content.',e)}
+ buildCar();drawCams();drawCls();
+}
+async function up(bucket,dataUrl,prefix){
+ const blob=await(await fetch(dataUrl)).blob(),path=prefix+'/'+crypto.randomUUID()+'.jpg';
+ const{error}=await sb.storage.from(bucket).upload(path,blob,{contentType:'image/jpeg',cacheControl:'31536000'});
+ if(error)throw error;return path}
+const resolveImg=async(v,bucket,prefix)=>!v.img?null:v.img.startsWith('data:')?await up(bucket,v.img,prefix):(v.image_path||null);
+const rmImg=(bucket,path)=>{if(path)sb.storage.from(bucket).remove([path])};
+async function dbSave(fn,after){try{await fn();await loadAll();after&&after()}catch(e){alert(e.code==='23503'?'This item is still referenced (for example a camera with bookings) and can’t be deleted. Set the camera to Retired instead.':'Save failed: '+(e.message||e))}}
+async function catId(name){
+ name=(name||'').trim();if(!name)return null;
+ const slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ const{data}=await sb.from('categories').select('id').eq('slug',slug).maybeSingle();if(data)return data.id;
+ const{data:c,error}=await sb.from('categories').insert({name,slug}).select('id').single();if(error)throw error;return c.id}
+async function joinLedger(e){e.preventDefault();const f=e.target,b=f.querySelector('button');b.disabled=true;
+ const{error}=await sb.from('newsletter_subscribers').insert({email:f.querySelector('input').value.trim()});
+ const ok=!error||error.code==='23505';b.textContent=ok?'You’re on the ledger':'Try again';b.disabled=ok;return false}
 
 /* ---------- carousel ---------- */
 const stage=$('stage'),dots=$('dots'),hero=$('hero'),DUR=4000;
@@ -352,7 +385,7 @@ window.addEventListener('resize',render);
 /* ---------- vault ---------- */
 function drawCams(){
  const g=$('camGrid');
- g.innerHTML=st.cams.map((c,i)=>`<article class="card"><div class="cardtop"><b>● ${esc(c.status)}</b><span>ID: ${esc(c.id)}</span></div><div class="ph ${c.g}${c.img?'':' noimg'}"${bg(c)}><button class="edit adm-only" data-i="${i}">✎ Edit</button></div><div class="kind">${esc(c.kind)}</div><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div>${[1,2,3].filter(n=>c['a'+n]).map(n=>`<div class="spec"><span>${esc(c['a'+n])}</span><span>${esc(c['v'+n])}</span></div>`).join('')}<div class="price"><div><b>₱${esc(c.day)}</b> / day<small>₱${esc(c.week)} / 7+ Days</small></div><button class="btn" onclick="location.href='cameraDetails.html'">Reserve Camera</button></div></article>`).join('');
+ g.innerHTML=st.cams.map((c,i)=>`<article class="card"><div class="cardtop"><b>● ${esc(c.status)}</b><span>ID: ${esc(c.id)}</span></div><div class="ph ${c.g}${c.img?'':' noimg'}"${bg(c)}><button class="edit adm-only" data-i="${i}">✎ Edit</button></div><div class="kind">${esc(c.kind)}</div><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div>${[1,2,3].filter(n=>c['a'+n]).map(n=>`<div class="spec"><span>${esc(c['a'+n])}</span><span>${esc(c['v'+n])}</span></div>`).join('')}<div class="price"><div><b>₱${esc(c.day)}</b> / day<small>₱${esc(c.week)} / 7+ Days</small></div><button class="btn" onclick="location.href='cameraDetails.html?id=${c.dbid||''}'">Reserve Camera</button></div></article>`).join('');
  g.querySelectorAll('.edit').forEach(b=>b.onclick=()=>editCam(+b.dataset.i));
 }
 
@@ -408,34 +441,58 @@ function form(title,F,o,onSave,onDel,check){
 
 /* ---------- editors ---------- */
 const SF=[{k:'img',l:'Photo (upload)',type:'file'},{k:'t',l:'Tag shown on the photo',ph:'e.g. FASHION PHOTOGRAPHY'},{k:'h',l:'Title'},{k:'m',l:'Credit · Location'},{k:'p',l:'Description',type:'area'},{k:'c',l:'Camera',h:1},{k:'l',l:'Lens · Sensor',h:1}];
-function editSlide(i){const n=i<0;
- form(n?'Add carousel slide':'Edit carousel slide',SF,n?SL('NEW PHOTOGRAPHY',rg(),'','','','',''):st.slides[i],
-  v=>{n?st.slides.push(v):st.slides[i]=v;save();buildCar();if(n)go(st.slides.length-1)},
-  n||st.slides.length<2?null:()=>{st.slides.splice(i,1);save();buildCar()})}
-const CF=[{k:'img',l:'Camera photo (upload)',type:'file'},{k:'status',l:'Status',type:'sel',o:['Available Now','Reserved','In Service'],h:1},{k:'id',l:'Vault ID',h:1,ph:'#ARC-XXX'},{k:'kind',l:'Category label',ph:'e.g. MODULAR MEDIUM FORMAT'},{k:'name',l:'Camera name'},{k:'sub',l:'Short description'},
+function editSlide(i){const n=i<0,o=n?SL('NEW PHOTOGRAPHY',rg(),'','','','',''):st.slides[i];
+ form(n?'Add carousel slide':'Edit carousel slide',SF,o,
+  v=>dbSave(async()=>{
+   const path=await resolveImg(v,'site-media','slides');
+   const row={tag:v.t,title:v.h,credit:v.m,description:v.p,camera:v.c,lens_sensor:v.l,image_path:path};
+   if(n)row.sort_order=st.slides.length;
+   const{error}=await(n?sb.from('hero_slides').insert(row):sb.from('hero_slides').update(row).eq('id',o.dbid));if(error)throw error;
+   if(!n&&o.image_path&&o.image_path!==path)rmImg('site-media',o.image_path)},n?()=>go(st.slides.length-1):null),
+  n||st.slides.length<2?null:()=>dbSave(async()=>{const{error}=await sb.from('hero_slides').delete().eq('id',o.dbid);if(error)throw error;rmImg('site-media',o.image_path)}))}
+const CF=[{k:'img',l:'Camera photo (upload)',type:'file'},{k:'status',l:'Status',type:'sel',o:['Available Now','In Service','Retired'],h:1},{k:'id',l:'Vault ID',h:1,ph:'#ARC-XXX'},{k:'kind',l:'Category label',ph:'e.g. MODULAR MEDIUM FORMAT'},{k:'name',l:'Camera name'},{k:'sub',l:'Short description'},
  {k:'a1',l:'Spec 1 label',h:1},{k:'v1',l:'Spec 1 value',h:1},{k:'a2',l:'Spec 2 label',h:1},{k:'v2',l:'Spec 2 value',h:1},{k:'a3',l:'Spec 3 label',h:1},{k:'v3',l:'Spec 3 value',h:1},{k:'day',l:'Price / day (₱)',h:1},{k:'week',l:'7+ Days (₱)',h:1}];
-function editCam(i){const n=i<0;
- form(n?'Upload camera to the vault':'Edit camera',CF,n?C('#ARC-','','','',rg(),'','',['Sensor','','Dynamic Range','','Condition Grade','']):st.cams[i],
-  v=>{n?st.cams.push(v):st.cams[i]=v;save();drawCams()},n?null:()=>{st.cams.splice(i,1);save();drawCams()},
-  v=>!v.name?'Please enter a camera name.':'')}
+function editCam(i){const n=i<0,o=n?C('#ARC-','','','',rg(),'','',['Sensor','','Dynamic Range','','Condition Grade','']):st.cams[i];
+ form(n?'Upload camera to the vault':'Edit camera',CF,o,
+  v=>dbSave(async()=>{
+   const path=await resolveImg(v,'camera-images','cameras');
+   const specs=[1,2,3].map(k=>({label:v['a'+k],value:v['v'+k]})).filter(x=>x.label&&x.value);
+   const row={code:v.id.replace(/^#/,'').trim(),category_id:await catId(v.kind),name:v.name,subtitle:v.sub,day_rate:+v.day||0,week_rate:+v.week||0,specs,status:STATUS_IN[v.status]||'available',is_active:v.status!=='Retired',image_path:path};
+   const{error}=await(n?sb.from('cameras').insert(row):sb.from('cameras').update(row).eq('id',o.dbid));if(error)throw error;
+   if(!n&&o.image_path&&o.image_path!==path)rmImg('camera-images',o.image_path)}),
+  n?null:()=>dbSave(async()=>{const{error}=await sb.from('cameras').delete().eq('id',o.dbid);if(error)throw error;rmImg('camera-images',o.image_path)}),
+  v=>!v.name?'Please enter a camera name.':!v.id.replace(/^#/,'').trim()?'Please enter a Vault ID.':'')}
 const KF=[{k:'video',l:'Video tutorial link',ph:'https://www.youtube.com/watch?v=…',n:'YouTube, Vimeo, or a direct .mp4 / .webm link'},{k:'img',l:'Cover image (optional — YouTube links get one automatically)',type:'file'},{k:'dur',l:'Duration label',ph:'e.g. 42 MIN MASTERCLASS',h:1},{k:'cat',l:'Category',h:1},{k:'title',l:'Title'},{k:'desc',l:'Description',type:'area'},{k:'inst',l:'Instructor'}];
-function editCls(i){const n=i<0;
- form(n?'Add video tutorial':'Edit video tutorial',KF,n?K('','','','','',rg()):st.classes[i],
-  v=>{n?st.classes.push(v):st.classes[i]=v;save();drawCls()},n?null:()=>{st.classes.splice(i,1);save();drawCls()},
+function editCls(i){const n=i<0,o=n?K('','','','','',rg()):st.classes[i];
+ form(n?'Add video tutorial':'Edit video tutorial',KF,o,
+  v=>dbSave(async()=>{
+   const path=await resolveImg(v,'site-media','tutorials');
+   const row={duration_label:v.dur,category:v.cat,title:v.title,description:v.desc,instructor:v.inst,video_url:v.video||null,cover_path:path};
+   if(n)row.sort_order=st.classes.length;
+   const{error}=await(n?sb.from('tutorials').insert(row):sb.from('tutorials').update(row).eq('id',o.dbid));if(error)throw error;
+   if(!n&&o.image_path&&o.image_path!==path)rmImg('site-media',o.image_path)}),
+  n?null:()=>dbSave(async()=>{const{error}=await sb.from('tutorials').delete().eq('id',o.dbid);if(error)throw error;rmImg('site-media',o.image_path)}),
   v=>!v.title?'Please enter a title.':v.video&&!/^https?:\/\//i.test(v.video)?'Please enter a full video link starting with https://':'')}
 $('addSlide').onclick=()=>editSlide(-1);$('addCam').onclick=()=>editCam(-1);$('addCls').onclick=()=>editCls(-1);
 
 /* ---------- admin mode ---------- */
 const setAdm=on=>document.body.classList.toggle('admin',on);
-$('admBtn').onclick=()=>setAdm(true);$('admExit').onclick=()=>setAdm(false);
-$('navAdm').onclick=()=>setAdm(!document.body.classList.contains('admin'));
-if(location.hash==='#admin')setAdm(true);
-$('admReset').onclick=()=>{if(confirm('Reset all slides, cameras and tutorials to the original content?')){st=JSON.parse(JSON.stringify(DEF));save();cur=0;buildCar();drawCams();drawCls()}};
+async function isAdmin(){const{data:{session}}=await sb.auth.getSession();if(!session)return false;const{data}=await sb.from('profiles').select('role').eq('id',session.user.id).maybeSingle();return !!data&&data.role==='admin'}
+const openLogin=()=>{$('lerr').textContent='';$('lm').classList.add('open')};
+$('admBtn').onclick=openLogin;
+$('admExit').onclick=async()=>{setAdm(false);await sb.auth.signOut();loadAll()};
+$('navAdm').onclick=async()=>{if(document.body.classList.contains('admin'))$('admExit').onclick();else if(await isAdmin()){setAdm(true);loadAll()}else openLogin()};
+$('lcan').onclick=()=>$('lm').classList.remove('open');
+$('lform').onsubmit=async e=>{e.preventDefault();$('lerr').textContent='';
+ const{error}=await sb.auth.signInWithPassword({email:$('lemail').value.trim(),password:$('lpass').value});
+ if(error){$('lerr').textContent=error.message;return}
+ if(!await isAdmin()){await sb.auth.signOut();$('lerr').textContent='This account is not an admin.';return}
+ $('lm').classList.remove('open');$('lpass').value='';setAdm(true);loadAll()};
 document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){lb.classList.remove('open');closeV();closeForm();return}
  if(document.querySelector('.mdl.open')||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
  if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
-buildCar();drawCams();drawCls();
+(async()=>{await loadAll();if(await isAdmin())setAdm(true);else if(location.hash==='#admin')openLogin()})();
 </script>
 </body>
 </html>

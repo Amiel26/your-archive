@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Visual Archive — Your Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf1f5;--bg2:#fbe8f0;--card:#fff;--ink:#2b1d24;--mut:#8a7480;--acc:#d4789c;--accd:#b0507a;--line:#f1d3e0;
+--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+a{color:inherit;text-decoration:none}button{font-family:inherit}
+.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accd)}
+h1,h2{font-family:var(--serif);font-weight:400}
+.btn{display:inline-block;background:var(--acc);color:#fff;border:0;border-radius:6px;padding:8px 14px;font:500 12px var(--sans);cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--accd)}
+.gh{background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:8px 12px;font:500 12px var(--sans);cursor:pointer}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;background:rgba(253,241,245,.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);gap:16px}
+.logo{font-family:var(--serif);font-style:italic;font-size:18px}
+nav ul{display:flex;gap:22px;list-style:none;font-size:12px;color:var(--mut)}
+@media(max-width:860px){nav ul{display:none}}
+.hero{padding:44px 6vw 30px;background:var(--bg)}
+.hero .in{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
+.hero h1{font-size:clamp(34px,5vw,50px);line-height:1.1;margin:8px 0 14px}
+.hero p{color:#5d4a54;max-width:560px}
+.stats{display:flex;gap:26px;border-left:1px solid var(--line);padding-left:26px}
+.stats b{display:block;font-family:var(--serif);font-weight:400;font-size:24px}.stats small{font-size:10px;color:var(--mut)}
+.stats div:last-child b{color:var(--accd)}
+.bar{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 6vw}
+.bar .in{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.row .lb{font-size:9px;letter-spacing:.14em;color:var(--mut);margin-right:4px}
+.row .sp{flex:1}
+.chip{font:11px var(--sans);padding:5px 12px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .2s}
+.chip:hover{border-color:var(--acc)}
+.chip.on{background:var(--bg2);border-color:var(--acc);color:var(--accd);font-weight:500}
+.tab{font:11px var(--sans);background:none;border:0;border-bottom:1.5px solid transparent;padding:4px 2px;margin-right:12px;cursor:pointer;color:var(--ink)}
+.tab.on{color:var(--accd);border-color:var(--accd)}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{border:0;background:#fff;font:11px var(--sans);padding:5px 12px;cursor:pointer;color:var(--ink)}
+.seg button.on{background:var(--bg2);color:var(--accd);font-weight:500}
+.vs{font-size:10px;color:var(--mut)}.vs::before{content:"●";color:var(--acc);margin:0 4px}
+main{max-width:1200px;margin:0 auto;padding:28px 6vw}
+.meta{font-size:11px;color:var(--mut);margin-bottom:14px}
+.mas{columns:2;column-gap:24px}
+@media(max-width:760px){.mas{columns:1}}
+.card{break-inside:avoid;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:24px;cursor:pointer;box-shadow:0 8px 24px rgba(192,98,138,.08);transition:transform .35s,box-shadow .35s;animation:rise .5s both}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(192,98,138,.18)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.ph{position:relative;overflow:hidden;background-size:cover;background-position:center}
+.card .ph{margin:10px 10px 0;border-radius:6px}
+.card .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);transform:translateX(-120%);transition:transform .8s}
+.card:hover .ph::after{transform:translateX(120%)}
+.mo{position:absolute;top:10px;left:10px;background:rgba(43,29,36,.75);color:#fff;font-size:9px;letter-spacing:.12em;padding:3px 8px;border-radius:99px}
+.pl{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center}
+.cap{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:var(--bg2);margin-top:10px}
+.cap b{display:block;font-family:var(--serif);font-weight:400;font-size:16px}
+.cap small{font-size:10px;color:var(--mut)}
+.pill{font-size:9px;color:var(--accd);background:#fff;border:1px solid var(--line);border-radius:4px;padding:3px 8px;white-space:nowrap}
+.empty{text-align:center;color:var(--mut);padding:50px 0}
+.g1{background-image:linear-gradient(160deg,#e9c4c0,#b98274 55%,#7a5149)}
+.g2{background-image:linear-gradient(160deg,#cfd3d6,#8b9298 55%,#3b4046)}
+.g3{background-image:linear-gradient(160deg,#f4d9a8,#d99a6a 55%,#8a5a49)}
+.g4{background-image:linear-gradient(160deg,#e8e6e4,#9c9a98 55%,#262626)}
+.g5{background-image:linear-gradient(160deg,#d6c9bb,#8d8c88 55%,#4b4742)}
+.g6{background-image:linear-gradient(160deg,#c9d6cf,#7f9a92 55%,#35504a)}
+.g7{background-image:linear-gradient(160deg,#f2c9a0,#c97e5b 55%,#5c3a35)}
+.sub{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px 18px;font-size:12px;margin-top:8px}
+.sub i{width:30px;height:30px;border-radius:50%;border:1px solid var(--acc);color:var(--acc);display:flex;align-items:center;justify-content:center;font-style:normal;flex:none}
+.sub div{flex:1;color:var(--mut)}.sub b{display:block;color:var(--ink);font-weight:500}
+.sub button{background:none;border:0;border-bottom:1px solid var(--accd);color:var(--accd);font:500 11px var(--sans);cursor:pointer}
+.edu{background:var(--bg2);padding:60px 6vw;margin-top:50px}
+.edu .in{max-width:1200px;margin:0 auto}
+.edu h2{font-size:clamp(26px,4vw,34px);margin:6px 0 10px}
+.edu .hd{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.edu .hd p{color:#5d4a54;max-width:520px}
+.edu .hd button{background:none;border:0;color:var(--accd);font:500 12px var(--sans);cursor:pointer}
+.g3c{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
+.mc{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s;animation:rise .5s both}
+.mc:hover{transform:translateY(-4px)}
+.mc .ph{height:170px;cursor:pointer;margin:8px 8px 0;border-radius:8px}
+.bd{position:absolute;bottom:8px;font-size:9px;letter-spacing:.1em;padding:3px 8px;border-radius:4px}
+.bd.l{left:8px;background:rgba(43,29,36,.8);color:#fff}.bd.r{right:8px;background:#fff;color:var(--accd)}
+.mc .tx{padding:14px 16px;flex:1}
+.mc .k{font-size:9px;letter-spacing:.1em;color:var(--accd)}.mc .k span{color:var(--mut)}
+.mc h3{font-family:var(--serif);font-weight:400;font-size:18px;margin:6px 0}
+.mc p{font-size:12px;color:#5d4a54}
+.mc .ft{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid var(--line);font-size:11px}
+.mc .ft a{color:var(--mut);cursor:pointer}.mc .ft a:hover{color:var(--accd)}
+.mc .ft button{background:none;border:0;color:var(--accd);font:500 11px var(--sans);cursor:pointer}
+footer{padding:36px 6vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:11px;color:var(--mut)}
+footer .logo{color:var(--ink);display:block;margin-bottom:6px}
+footer ul{display:flex;gap:18px;list-style:none;flex-wrap:wrap}
+.mdl{position:fixed;inset:0;background:rgba(43,29,36,.82);display:none;align-items:center;justify-content:center;z-index:60;padding:4vw;overflow:auto}
+.mdl.open{display:flex;animation:rise .25s}
+.box{background:#fff;border-radius:14px;padding:22px;width:min(540px,100%);max-height:92vh;overflow:auto}
+.box h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:12px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--mut)}.fld.f{grid-column:1/-1}
+.fld input,.fld select,.fld textarea{border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:13px var(--sans);background:var(--bg);color:var(--ink);width:100%}
+.act{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.lbx{display:grid;grid-template-columns:1.6fr 1fr;background:#fff;border-radius:14px;overflow:hidden;width:min(1000px,100%);position:relative}
+.lbx .im{min-height:min(70vh,560px);background-size:contain;background-repeat:no-repeat;background-position:center;background-color:#1d1217}
+.lbx .inf{padding:26px;display:flex;flex-direction:column;gap:6px}
+.lbx h3{font-family:var(--serif);font-weight:400;font-size:26px}
+.lbx dl{margin-top:12px;font-size:12px}.lbx dt{font-size:9px;letter-spacing:.14em;color:var(--mut);margin-top:10px;text-transform:uppercase}
+.nv{margin-top:auto;display:flex;align-items:center;gap:8px;padding-top:18px;font-size:11px;color:var(--mut)}
+.x{position:absolute;top:10px;right:10px;z-index:3;width:30px;height:30px;border-radius:50%;border:0;background:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+@media(max-width:760px){.lbx{grid-template-columns:1fr}.lbx .im{min-height:300px}}
+.vr{position:relative;padding-top:56.25%}.vr iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:10px}
+#toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:12px;opacity:0;pointer-events:none;transition:all .35s;z-index:80}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+nav ul a{color:inherit;padding-bottom:4px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+nav ul a:hover{color:#c0628a}
+nav ul a.cur{color:#8e3a5d;border-bottom-color:currentColor}
+html{scroll-behavior:smooth}
+#edu{scroll-margin-top:70px}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="landingPage.html">Your Archive</a>
+<ul><li><a href="cameraRent.html">Explore Cameras</a></li><li><a href="photoArchive.html" class="cur">Photography Archive</a></li><li><a href="landingPage.html#how">How It Works</a></li><li><a href="cameraDetails.html#book">Pricing &amp; Accessories</a></li><li><a href="bookAndPayment.html">My Bookings</a></li><li><a href="landingPage.html#admin">Admin Portal</a></li></ul>
+<a class="btn" href="cameraRent.html">Book a Camera</a></nav>
+
+<header class="hero"><div class="in">
+ <div><span class="eyebrow">● Curatorial Collection • Autumn 2024</span>
+ <h1>The Visual Archive</h1>
+ <p>A permanent curatorial repository of rare medium-format prints, documentary glass studies, and cinematic plates created exclusively with vault-commissioned optical instruments.</p></div>
+ <div class="stats"><div><b id="cnt">1,842</b><small>Indexed Specimens</small></div><div><b>100%</b><small>Provenance Verified</small></div></div>
+</div></header>
+
+<div class="bar"><div class="in">
+ <div class="row"><span class="lb">SYSTEM:</span><span id="sys" class="row"></span><span class="sp"></span><span class="vs">Vault Status: 48 Units In Dispatch</span></div>
+ <div class="row"><span class="lb">DISCIPLINE:</span><span id="dis" class="row" style="gap:0"></span><span class="sp"></span>
+  <div class="seg" id="mode"><button data-m="still">▣ Stills &amp; Photographs</button><button data-m="motion">▶ Motion &amp; Video Previews</button><button data-m="edu">☰ Masterclasses</button></div></div>
+</div></div>
+
+<main>
+ <div class="meta" id="meta"></div>
+ <div class="mas" id="grid"></div>
+ <div class="sub"><i>✓</i><div><b>Curatorial Submission Program</b>Are you a vault renter? Submit your final high-resolution RAW stills to receive rental archival credits.</div><button id="subBtn">Submit Work for Archiving →</button></div>
+</main>
+
+<section class="edu" id="edu"><div class="in">
+ <div class="hd"><div><span class="eyebrow">Educational Vault</span><h2>Archival Masterclasses &amp; Video Tutorials</h2><p>In-depth sensor breakdowns, optical calibration tutorials, and field workflows recorded by master cinematographers and vault curators.</p></div><button id="allBtn">View All 24 Masterclasses →</button></div>
+ <div class="g3c" id="mcs"></div>
+</div></section>
+
+<footer><div><span class="logo">Your Archive</span>© 2024 Your Archive. Museum-Grade Optical Equipment &amp; Curatorial Rental Vault. All Rights Reserved.</div>
+<ul><li>Archival Standards</li><li>Insurance &amp; Provenance</li><li>Terms of Dispatch</li><li>Discretion Protocol</li><li>Contact Curators</li><li>Journal</li></ul></footer>
+
+<div id="lb" class="mdl"><div class="lbx"><button class="x" id="lx" aria-label="Close">✕</button><div class="im" id="li"></div>
+ <div class="inf"><span class="pill" id="lt" style="align-self:flex-start"></span><h3 id="lh"></h3><small id="lg" style="color:var(--mut)"></small><dl id="ld"></dl>
+ <div class="nv"><button class="gh" id="lp">‹ Prev</button><button class="gh" id="ln">Next ›</button><span id="lc"></span></div></div></div></div>
+
+<div id="sm" class="mdl"><form class="box" id="sf"><h3>Submit Work for Archiving</h3><div class="fg">
+ <label class="fld f">High-resolution still (required)<input type="file" id="sfile" accept="image/*" required></label>
+ <label class="fld f">Title<input id="stt" required placeholder="e.g. Marais at Dusk"></label>
+ <label class="fld">Camera system<select id="ssy"></select></label>
+ <label class="fld">Discipline<select id="sdi"></select></label>
+ <label class="fld">Lens · settings<input id="sln" placeholder="35mm f/1.4 · ISO 100"></label>
+ <label class="fld">Location<input id="slc" placeholder="Paris, France"></label>
+ </div><div class="act"><button type="button" class="gh" id="sx">Cancel</button><button class="btn" style="padding:9px 18px">Submit</button></div></form></div>
+
+<div id="vm" class="mdl"><div class="box" style="width:min(860px,100%)"><div class="act" style="margin:0 0 10px"><button class="gh" id="vx">✕ Close</button></div><h3 id="vh"></h3><div id="vb"></div>
+ <div class="fld" style="margin-top:14px"><span id="vn"></span><div style="display:flex;gap:8px"><input id="vu" placeholder="https://www.youtube.com/watch?v=…" style="flex:1;border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:13px var(--sans)"><button class="btn" id="vs">Save &amp; play</button></div></div></div></div>
+<div id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SYS=['Leica M11','Hasselblad X2D 100C','Contax 645','Sony FX6 Cinema','Fujifilm GFX 100 II'];
+const DIS=['Fashion & Editorial','Fine Art & Landscape','Street Documentary','Cinema & Narrative'];
+const I=(t,sys,dis,type,g,ar,gear,tag,model,loc,date,stock)=>({t,sys,dis,type,g,ar,gear,tag,model,loc,date,stock});
+const BASE=[
+ I('Elysian Form III',1,0,'still','g1','3/4','Hasselblad X2D 100C • ISO 64 • 1/250s • XCD 55mm','Medium Format 100MP','Adut Akech','Paris Archive','Oct 2023','Phase One 100MP'),
+ I('Rambla in Rain',0,2,'still','g4','4/3','Leica M11 Monochrom • Summilux-M 35mm f/1.4','Rangefinder','—','Barcelona','Mar 2024','Digital B&W'),
+ I('Monolith Solitude (Scene 14)',3,3,'motion','g5','16/9','Sony FX6 • Cine Prime 50mm T1.5 • 4K Raw','Full Frame Cinema','—','Kyoto','Jun 2024','4K Raw'),
+ I('Sienna Warmth',2,0,'still','g3','4/5','Contax 645 • Carl Zeiss Planar 80mm f/2 • Portra 400','Analog 120 Film','—','Tuscany','Sep 2023','Portra 400'),
+ I('Brutalist Pavilion Study',4,1,'still','g2','1/1','Fujifilm GFX 100 II • GF 23mm f/4 • ISO 100','Large Format','—','Kyoto','Jan 2024','Digital 102MP'),
+ I('Highland Mist & Basalt',1,1,'still','g6','5/4','Hasselblad X2D 100C • XCD 38mm f/2.8','Medium Format 100MP','—','Isle of Skye','Feb 2024','Phase One 100MP'),
+ I('Dune Light: Rub’ al Khali',3,3,'motion','g7','16/9','Sony FX6 • Cooke Anamorphic /i • 4K Raw','Full Frame Cinema','—','Arabian Peninsula','Apr 2024','4K Raw'),
+ I('Marais Dusk',0,2,'still','g2','3/4','Leica M11 • Summilux 35mm f/1.4','Rangefinder','—','Paris','Nov 2023','Digital')];
+const MC=[
+ {d:'38:15 MIN',b:'4K HDR',s:'HASSELBLAD X2D 100C',c:'Medium Format Optics',t:'Mastering 16-Bit Color Depth in Phocus',x:'Complete calibration workflow, highlight rolloff management, and Phocus RAW grading for museum-grade output.',r:'Sample RAWs (1.8 GB)',g:'g1'},
+ {d:'52:40 MIN',b:'CINEMA SPEC',s:'SONY FX6 CINEMA',c:'S-Cinetone Rigging',t:'Cine EI Mode & Variable ND Balancing',x:'Understanding electronic neutral density filters on run-and-gun documentary sets without altering color.',r:'ProRes XMLs (640 MB)',g:'g2'},
+ {d:'26:10 MIN',b:'ANALOG VAULT',s:'CONTAX 645 & LEICA',c:'Film Emulsion Studies',t:'Matching Digital Color Science to Film',x:'Constructing curatorial LUTs and tonal curves that emulate organic silver halide dyes for hybrid production.',r:'3D LUT Pack (.cube)',g:'g7'},
+ {d:'31:05 MIN',b:'1080p',s:'LEICA M11',c:'Rangefinder Precision',t:'Zone Focusing for Street Documentary',x:'Hyperfocal calibration and split-image technique for fast, quiet work in crowded streets.',r:'Focus Chart (PDF)',g:'g4'},
+ {d:'44:50 MIN',b:'4K HDR',s:'FUJIFILM GFX 100 II',c:'Large Format Workflow',t:'Tethered Capture & Studio Color Pipelines',x:'Building a repeatable tethered workflow with camera profiles, targets, and archival naming.',r:'Profile Pack (210 MB)',g:'g5'},
+ {d:'19:30 MIN',b:'ANALOG VAULT',s:'CONTAX 645',c:'Scanning & Archiving',t:'Digitizing 120 Film Without Losing Latitude',x:'Scanning, inversion, and dust management for archival-quality 120 film negatives.',r:'Scan Checklist (PDF)',g:'g3'}];
+const KEY='yourArchive.gallery.v1';
+let st={user:[],vid:{}};try{st=Object.assign(st,JSON.parse(localStorage.getItem(KEY))||{})}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){toast('Storage full — try a smaller image')}};
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._);t._=setTimeout(()=>t.classList.remove('on'),2400)}
+let fs=-1,fd=-1,fm='all',list=[],cur=0,showAll=false;
+/* filters UI */
+$('sys').innerHTML=['All Cameras',...SYS].map((s,i)=>`<button class="chip${i?'':' on'}" data-i="${i-1}">${s}</button>`).join('');
+$('dis').innerHTML=['All Disciplines',...DIS].map((s,i)=>`<button class="tab${i?'':' on'}" data-i="${i-1}">${esc(s)}</button>`).join('');
+$('sys').onclick=e=>{const b=e.target.closest('button');if(!b)return;fs=+b.dataset.i;[...$('sys').children].forEach(x=>x.classList.toggle('on',x===b));draw()};
+$('dis').onclick=e=>{const b=e.target.closest('button');if(!b)return;fd=+b.dataset.i;[...$('dis').children].forEach(x=>x.classList.toggle('on',x===b));draw()};
+$('mode').onclick=e=>{const b=e.target.closest('button');if(!b)return;const m=b.dataset.m;
+ if(m==='edu'){$('edu').scrollIntoView();return}
+ fm=fm===m?'all':m;[...$('mode').children].forEach(x=>x.classList.toggle('on',x.dataset.m===fm));draw()};
+/* gallery */
+const all=()=>[...st.user,...BASE];
+const bgS=o=>o.img?`style="background-image:url('${o.img}');aspect-ratio:${o.ar}"`:`style="aspect-ratio:${o.ar}"`;
+function draw(){
+ list=all().filter(o=>(fs<0||o.sys===fs)&&(fd<0||o.dis===fd)&&(fm==='all'||o.type===fm));
+ $('cnt').textContent=(1842+st.user.length).toLocaleString('en-US');
+ $('meta').textContent=`Showing ${list.length} specimen${list.length===1?'':'s'}${fs>=0?' · '+SYS[fs]:''}${fd>=0?' · '+DIS[fd]:''}`;
+ $('grid').innerHTML=list.length?list.map((o,i)=>`<figure class="card" data-i="${i}" style="animation-delay:${i*50}ms" tabindex="0"><div class="ph ${o.g}" ${bgS(o)}>${o.type==='motion'?`<span class="mo">MOTION</span><span class="pl">▶</span>`:''}</div><div class="cap"><div><b>${esc(o.t)}</b><small>${esc(o.gear)}</small></div><span class="pill">${esc(o.tag)}</span></div></figure>`).join(''):'<div class="empty">No specimens match these filters yet.</div>';
+}
+$('grid').onclick=e=>{const c=e.target.closest('.card');if(c)openLB(+c.dataset.i)};
+$('grid').onkeydown=e=>{if(e.key==='Enter'){const c=e.target.closest('.card');if(c)openLB(+c.dataset.i)}};
+/* lightbox */
+function openLB(i){cur=(i+list.length)%list.length;const o=list[cur],im=$('li');
+ im.className='im '+o.g;im.style.backgroundImage=o.img?`url('${o.img}')`:'';im.style.backgroundSize=o.img?'contain':'cover';
+ $('lt').textContent=o.tag;$('lh').textContent=o.t;$('lg').textContent=o.type==='motion'?'Motion preview · '+o.gear:o.gear;
+ $('ld').innerHTML=[['Model',o.model],['Location',o.loc],['Capture Date',o.date],['Film Stock / Sensor',o.stock]].map(r=>`<dt>${r[0]}</dt><dd>${esc(r[1]||'—')}</dd>`).join('');
+ $('lc').textContent=`${cur+1} / ${list.length}`;$('lb').classList.add('open')}
+$('lx').onclick=()=>$('lb').classList.remove('open');$('lb').onclick=e=>{if(e.target.id==='lb')$('lb').classList.remove('open')};
+$('lp').onclick=()=>openLB(cur-1);$('ln').onclick=()=>openLB(cur+1);
+/* submission */
+$('ssy').innerHTML=SYS.map((s,i)=>`<option value="${i}">${s}</option>`).join('');$('sdi').innerHTML=DIS.map((s,i)=>`<option value="${i}">${esc(s)}</option>`).join('');
+$('subBtn').onclick=()=>$('sm').classList.add('open');$('sx').onclick=()=>$('sm').classList.remove('open');
+function readImg(f,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,1400/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.82),`${c.width}/${c.height}`)};im.src=r.result};r.readAsDataURL(f)}
+$('sf').onsubmit=e=>{e.preventDefault();const f=$('sfile').files[0];if(!f)return;
+ readImg(f,(img,ar)=>{const sy=+$('ssy').value,d=new Date();
+  st.user.unshift({t:$('stt').value.trim(),sys:sy,dis:+$('sdi').value,type:'still',g:'g1',ar,img,gear:SYS[sy]+($('sln').value?' • '+$('sln').value.trim():''),tag:'Curatorial Submission',model:'—',loc:$('slc').value.trim()||'—',date:d.toLocaleString('en',{month:'short',year:'numeric'}),stock:'Digital RAW'});
+  save();$('sf').reset();$('sm').classList.remove('open');fs=-1;fd=-1;fm='all';
+  document.querySelectorAll('#sys .chip,#dis .tab').forEach((b,i,a)=>b.classList.toggle('on',b.dataset.i==='-1'));
+  [...$('mode').children].forEach(x=>x.classList.remove('on'));draw();toast('Submitted — added to the archive')})};
+/* masterclasses */
+function drawMC(){const n=showAll?MC.length:3;
+ $('mcs').innerHTML=MC.slice(0,n).map((m,i)=>`<article class="mc" style="animation-delay:${i*60}ms"><div class="ph ${m.g}" data-w="${i}"><span class="pl">▶</span><span class="bd l">${m.d}</span><span class="bd r">${m.b}</span></div><div class="tx"><div class="k">${m.s} • <span>${esc(m.c)}</span></div><h3>${esc(m.t)}</h3><p>${esc(m.x)}</p></div><div class="ft"><a data-r="${i}">⤓ ${esc(m.r)}</a><button data-w="${i}">${st.vid[m.t]?'Watch Session':'Watch Session'}</button></div></article>`).join('');
+ $('allBtn').textContent=showAll?'Show fewer ←':'View All 24 Masterclasses →'}
+$('allBtn').onclick=()=>{showAll=!showAll;drawMC()};
+$('mcs').onclick=e=>{const r=e.target.closest('[data-r]');if(r){toast('Preparing '+MC[+r.dataset.r].r+'…');return}const w=e.target.closest('[data-w]');if(w)openV(+w.dataset.w)};
+function parseVid(u){let m;
+ if(m=u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/))return{k:'f',src:`https://www.youtube.com/embed/${m[1]}?autoplay=1&rel=0`};
+ if(m=u.match(/vimeo\.com\/(?:video\/)?(\d+)/))return{k:'f',src:`https://player.vimeo.com/video/${m[1]}?autoplay=1`};
+ if(/\.(mp4|webm|ogg)(\?|#|$)/i.test(u))return{k:'v'};return null}
+let vi=0;
+function openV(i){vi=i;const m=MC[i],u=st.vid[m.t];$('vh').textContent=m.t;$('vm').classList.add('open');
+ const p=u&&parseVid(u);
+ $('vb').innerHTML=p?(p.k==='f'?`<div class="vr"><iframe src="${p.src}" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`:`<video controls autoplay src="${esc(u)}" style="width:100%;border-radius:10px"></video>`):`<div class="ph ${m.g}" style="height:260px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px">No video attached to this session yet.</div>`;
+ $('vn').textContent=u?'Replace the video link (YouTube, Vimeo or .mp4):':'Paste a video link to attach this session (YouTube, Vimeo or .mp4):';$('vu').value=u||''}
+$('vs').onclick=()=>{const u=$('vu').value.trim();if(!/^https?:\/\//i.test(u)||!parseVid(u)){toast('Enter a valid YouTube, Vimeo or .mp4 link');return}st.vid[MC[vi].t]=u;save();openV(vi)};
+function closeV(){$('vb').innerHTML='';$('vm').classList.remove('open')}
+$('vx').onclick=closeV;$('vm').onclick=e=>{if(e.target.id==='vm')closeV()};
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){$('lb').classList.remove('open');$('sm').classList.remove('open');closeV()}
+ if($('lb').classList.contains('open')){if(e.key==='ArrowRight')openLB(cur+1);if(e.key==='ArrowLeft')openLB(cur-1)}});
+draw();drawMC();
+</script>
+</body>
+</html>
